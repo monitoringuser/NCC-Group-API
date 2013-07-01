@@ -1,0 +1,99 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('NCC Group API'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/default.js')
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js'); ?>
+
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('NCC Group API') ?></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li>
+                                <a href="<?php echo $this->url('home') ?>">
+                                    <i class="icon-home"></i>
+                                    <?php echo $this->translate('Home') ?>
+                                </a>
+                            </li>
+
+                            <?php
+                            if ($this->getAuthenticationService()->hasIdentity()) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo $this->url('monitor') ?>">
+                                        <i class="icon-list"></i>
+                                        <?php echo $this->translate('Monitor List') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->url('monitor', array('action' => 'trend')) ?>">
+                                        <i class="icon-barcode"></i>
+                                        <?php echo $this->translate('Trends') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo $this->url('auth', array('action' => 'logout')) ?>">
+                                        <i class="icon-eject"></i>
+                                        <?php echo $this->translate('Logout') ?>
+                                        <?php echo $this->getAuthenticationService()->getIdentity()->getEmail(); ?>
+                                    </a>
+                                </li>
+                            <?php } else { ?>
+                                <li>
+                                    <a href="<?php echo $this->url('auth') ?>">
+                                        <i class="icon-user"></i>
+                                        <?php echo $this->translate('Login') ?>
+                                    </a>
+                                </li>
+                            <?php } ?>
+
+                        </ul>
+
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="alert alert-info">
+                <i class="icon-info-sign icon-white"></i>
+                POC v0.1.0.
+            </div>
+
+            <?php echo $this->messages($this->flashMessenger()); ?>
+
+            <?php echo $this->content; ?>
+
+            <hr>
+            <footer>
+                <p>
+                    NCC Group API
+                </p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="span12">
+        <table class="table table-striped visible-desktop">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Label</th>
+                    <th>Url</th>
+                    <th>Download Speed</th>
+                    <th>Alerting</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php
+        foreach($this->monitors as $monitor) {
+            echo '<tr>';
+            echo '<td>' . $monitor->getId() . '</td>';
+            echo '<td>' . $monitor->getLabel() . '</td>';
+            echo '<td>' . $monitor->getUrl() . '</td>';
+            echo '<td>' . $monitor->getDownloadSpeed() . '</td>';
+            echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
+            echo '<td>
+                    <a href="#" class=" disabled btn btn-small btn-' . $this->monitorStatus($monitor->getStatus()). '">' . $monitor->getStatus() . '</a>
+                  </td>';
+            echo '</tr>';
+        }
+        ?>
+            </tbody>
+        </table>
+
+        <table class="table table-striped hidden-desktop">
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Alerting</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach($this->monitors as $monitor) {
+                echo '<tr>';
+                echo '<td>' . $monitor->getLabel() . '</td>';
+                echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
+                echo '<td>
+                       <a href="#" class=" disabled btn btn-small btn-' . $this->monitorStatus($monitor->getStatus()). '">' . $monitor->getStatus() . '</a>
+                      </td>';
+                echo '</tr>';
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div>
