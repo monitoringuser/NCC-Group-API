@@ -10,8 +10,9 @@ interface MonitorInterface
 {
 
     /**
+     * @param string $accounts
      * @return array
      */
-    public function findAll();
+    public function findAllByAccounts($accounts);
 
 }

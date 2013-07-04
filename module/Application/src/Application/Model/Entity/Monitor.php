@@ -32,9 +32,9 @@ class Monitor implements InputFilterAwareInterface
     protected $status = '';
 
     /**
-     * @var int
+     * @var float
      */
-    protected $downloadSpeed = 0;
+    protected $lastTestDownloadSpeed = 0;
 
     /**
      * @var bool
@@ -56,11 +56,11 @@ class Monitor implements InputFilterAwareInterface
     public function exchangeArray(array $data)
     {
         $this->id            = (isset($data['id'])) ? $data['id'] : null;
-        $this->accountId     = (isset($data['accountId'])) ? $data['accountId'] : null;
+        $this->accountId     = (isset($data['id'])) ? $data['id'] : null;
         $this->label         = (isset($data['label'])) ? $data['label'] : null;
         $this->url           = (isset($data['url'])) ? $data['url'] : null;
         $this->status        = (isset($data['status'])) ? $data['status'] : null;
-        $this->downloadSpeed = (isset($data['downloadSpeed'])) ? $data['downloadSpeed'] : null;
+        $this->lastTestDownloadSpeed = (isset($data['lastTestDownloadSpeed'])) ? $data['lastTestDownloadSpeed'] : null;
         $this->alerting      = (isset($data['alerting'])) ? $data['alerting'] : null;
         $this->createdOn     = (isset($data['created_on'])) ? $data['created_on'] : null;
     }
@@ -143,12 +143,12 @@ class Monitor implements InputFilterAwareInterface
     }
 
     /**
-     * @param int $downloadSpeed
+     * @param float $downloadSpeed
      * @return Monitor
      */
-    public function setDownloadSpeed($downloadSpeed)
+    public function setLastTestDownloadSpeed($downloadSpeed)
     {
-        $this->downloadSpeed = (int)$downloadSpeed;
+        $this->lastTestDownloadSpeed = (float)$downloadSpeed;
 
         return $this;
     }
@@ -156,9 +156,9 @@ class Monitor implements InputFilterAwareInterface
     /**
      * @return int
      */
-    public function getDownloadSpeed()
+    public function getLastTestDownloadSpeed()
     {
-        return $this->downloadSpeed;
+        return $this->lastTestDownloadSpeed;
     }
 
     /**

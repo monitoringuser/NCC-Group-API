@@ -7,8 +7,9 @@ interface MonitorInterface
 {
 
     /**
+     * @param array $accounts
      * @return array
      */
-    public function findAll();
+    public function findAllByAccounts(array $accounts);
 
 }

@@ -17,8 +17,14 @@ use Application\Model\Service\Auth as AuthService;
 use Application\Model\Dao\Monitor\MonitorRest as MonitorDao;
 use Application\Model\Mapper\Monitor\MonitorRest as MonitorMapper;
 use Application\Model\Service\Monitor as MonitorService;
+use Application\Model\Dao\Account\AccountRest as AccountDao;
+use Application\Model\Mapper\Account\AccountRest as AccountMapper;
+use Application\Model\Service\Account as AccountService;
 use Zend\Authentication\AuthenticationService;
 use Application\View\Helper\Identity as IdentityViewHelper;
+use Application\Model\Dao\Test\TestRest as TestDao;
+use Application\Model\Mapper\Test\TestRest as TestMapper;
+use Application\Model\Service\Test as TestService;
 
 /**
  * Class Module
@@ -86,7 +92,7 @@ class Module
                     $dao = new AuthDao;
                     return $dao;
                 },
-                // monitors
+                // monitor
                 'Application\Model\Service\Monitor' => function($sm) {
                     $mapper = $sm->get('Application\Model\Mapper\Monitor\MonitorRest');
                     $service = new MonitorService($mapper);
@@ -98,10 +104,44 @@ class Module
                     return $mapper;
                 },
                 'Application\Model\Dao\Monitor\MonitorRest' =>  function($sm) {
-                    $dao = new MonitorDao;
+                    $authService = $sm->get('AuthenticationService');
+                    $dao = new MonitorDao($authService);
                     return $dao;
                 },
 
+                // account
+                'Application\Model\Service\Account' => function($sm) {
+                    $mapper = $sm->get('Application\Model\Mapper\Account\AccountRest');
+                    $service = new AccountService($mapper);
+                    return $service;
+                },
+                'Application\Model\Mapper\Account\AccountRest' => function($sm) {
+                    $dao = $sm->get('Application\Model\Dao\Account\AccountRest');
+                    $mapper = new AccountMapper($dao);
+                    return $mapper;
+                },
+                'Application\Model\Dao\Account\AccountRest' =>  function($sm) {
+                    $authService = $sm->get('AuthenticationService');
+                    $dao = new AccountDao($authService);
+                    return $dao;
+                },
+
+                // test
+                'Application\Model\Service\Test' => function($sm) {
+                    $mapper = $sm->get('Application\Model\Mapper\Test\TestRest');
+                    $service = new TestService($mapper);
+                    return $service;
+                },
+                'Application\Model\Mapper\Test\TestRest' => function($sm) {
+                    $dao = $sm->get('Application\Model\Dao\Test\TestRest');
+                    $mapper = new TestMapper($dao);
+                    return $mapper;
+                },
+                'Application\Model\Dao\Test\TestRest' =>  function($sm) {
+                    $authService = $sm->get('AuthenticationService');
+                    $dao = new TestDao($authService);
+                    return $dao;
+                },
             ),
 
         );

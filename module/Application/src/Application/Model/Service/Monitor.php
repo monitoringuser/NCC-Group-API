@@ -1,8 +1,8 @@
 <?php
 namespace Application\Model\Service;
 
-use Application\Model\Entity\Monitor as MonitorEntity;
 use Common\Model\Service\Core;
+use Application\Model\Entity\Account as AccountEntity;
 
 /**
  * Class Monitor
@@ -17,7 +17,20 @@ class Monitor extends Core
      */
     public function findAll()
     {
-        $monitors = $this->getMapper()->findAll();
+        $authService = $this->getServiceLocator()->get('AuthenticationService');
+
+        $monitors = $this->getMapper()->findAllByAccounts($authService->getIdentity()->getAccounts());
+
+        return $monitors;
+    }
+
+    /**
+     * @param AccountEntity $account
+     * @return array
+     */
+    public function findAllByAccount(AccountEntity $account)
+    {
+        $monitors = $this->getMapper()->findAllByAccounts(array($account));
 
         return $monitors;
     }

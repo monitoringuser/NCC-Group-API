@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Model\Entity\Account as AccountEntity;
 
 /**
  * Class MonitorController
@@ -28,9 +29,25 @@ class MonitorController extends AbstractActionController
     /**
      * @return array|ViewModel
      */
-    public function trendAction()
+    public function accountAction()
     {
-        return new ViewModel();
+        $accountId = (string) $this->params()->fromRoute('accountId', null);
+
+        $accountEntity = new AccountEntity();
+        $accountEntity->setId($accountId);
+
+        $monitorService = $this->getServiceLocator()->get('Application\Model\Service\Monitor');
+        $monitors = $monitorService->findAllByAccount($accountEntity);
+
+        // use indexAction view template (or move to partial)
+        $view = new ViewModel(
+            array(
+                'monitors' => $monitors
+            )
+        );
+        $view->setTemplate('application/monitor/index.phtml');
+        return $view;
     }
+
 
 }

@@ -43,15 +43,15 @@
                             if ($this->getAuthenticationService()->hasIdentity()) {
                             ?>
                                 <li>
-                                    <a href="<?php echo $this->url('monitor') ?>">
-                                        <i class="icon-list"></i>
-                                        <?php echo $this->translate('Monitor List') ?>
+                                    <a href="<?php echo $this->url('account') ?>">
+                                        <i class="icon-user"></i>
+                                        <?php echo $this->translate('Accounts') ?>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $this->url('monitor', array('action' => 'trend')) ?>">
-                                        <i class="icon-barcode"></i>
-                                        <?php echo $this->translate('Trends') ?>
+                                    <a href="<?php echo $this->url('monitor') ?>">
+                                        <i class="icon-list"></i>
+                                        <?php echo $this->translate('Monitors') ?>
                                     </a>
                                 </li>
                                 <li>

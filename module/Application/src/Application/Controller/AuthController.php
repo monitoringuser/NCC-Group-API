@@ -41,7 +41,7 @@ class AuthController extends AbstractActionController
                     $this->flashMessenger()->addSuccessMessage(
                         'Login Successful'
                     );
-                    return $this->redirect()->toRoute('monitor');
+                    return $this->redirect()->toRoute('account');
                 } else {
                     $this->flashMessenger()->addErrorMessage(
                         'Login Failed'

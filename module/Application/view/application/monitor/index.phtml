@@ -1,57 +1,67 @@
-    <div class="row">
-        <div class="span12">
-            <a class="btn" href="#saveAlertingStatus" data-toggle="modal"><i class="icon-download"></i> Save Status</a>
-            <a class="btn" href="#query1" data-toggle="modal"><i class="icon-globe"></i> Query</a>
-        </div>
+<div class="row">
+    <div class="span12">
+        <a class="btn" href="#saveAlertingStatus" data-toggle="modal"><i class="icon-download"></i> Save Status</a>
+        <a class="btn" href="#query1" data-toggle="modal"><i class="icon-globe"></i> Query</a>
     </div>
+</div>
 
 <div class="row">
     <div class="span12">
         <table class="table table-striped visible-desktop">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Label</th>
-                    <th>Url</th>
-                    <th>Download Speed</th>
-                    <th>Alerting</th>
-                    <th>Status</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Label</th>
+                <th>Url</th>
+                <th>Download Speed (secs)</th>
+                <th>Alerting</th>
+                <th>Status</th>
+            </tr>
             </thead>
             <tbody>
-        <?php
-        foreach($this->monitors as $monitor) {
-            echo '<tr>';
-            echo '<td>' . $monitor->getId() . '</td>';
-            echo '<td>' . $monitor->getLabel() . '</td>';
-            echo '<td>' . $monitor->getUrl() . '</td>';
-            echo '<td>' . $monitor->getDownloadSpeed() . '</td>';
-            echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
-            echo '<td>
-                    <a href="#" class=" disabled btn btn-small btn-' . $this->monitorStatus($monitor->getStatus()). '">' . $monitor->getStatus() . '</a>
-                  </td>';
-            echo '</tr>';
-        }
-        ?>
+            <?php
+            foreach ($this->monitors as $monitor) {
+                echo '<tr>';
+                echo '<td>' . $monitor->getId() . '</td>';
+                echo '<td>' . $monitor->getLabel() . '</td>';
+                echo '<td>' . $monitor->getUrl() . '</td>';
+                echo '<td>' . $monitor->getLastTestDownloadSpeed() . '</td>';
+                echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
+                echo '<td>
+                       <a href="' . $this->url(
+                        'test',
+                        array('action' => 'index', 'id' => $monitor->getAccountId(), 'name' => $monitor->getId())
+                    ) . '" class="btn btn-small btn-' . $this->monitorStatus(
+                        $monitor->getStatus()
+                    ) . '">' . $monitor->getStatus() . '</a>
+                      </td>';
+                echo '</tr>';
+            }
+            ?>
             </tbody>
         </table>
 
         <table class="table table-striped hidden-desktop">
             <thead>
-                <tr>
-                    <th>Label</th>
-                    <th>Alerting</th>
-                    <th>Status</th>
-                </tr>
+            <tr>
+                <th>Label</th>
+                <th>Alerting</th>
+                <th>Status</th>
+            </tr>
             </thead>
             <tbody>
             <?php
-            foreach($this->monitors as $monitor) {
+            foreach ($this->monitors as $monitor) {
                 echo '<tr>';
                 echo '<td>' . $monitor->getLabel() . '</td>';
                 echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
                 echo '<td>
-                       <a href="#" class=" disabled btn btn-small btn-' . $this->monitorStatus($monitor->getStatus()). '">' . $monitor->getStatus() . '</a>
+                       <a href="' . $this->url(
+                        'test',
+                        array('id' => $monitor->getAccountId(), 'name' => $monitor->getId())
+                    ) . '" class="btn btn-small btn-' . $this->monitorStatus(
+                        $monitor->getStatus()
+                    ) . '">' . $monitor->getStatus() . '</a>
                       </td>';
                 echo '</tr>';
             }
@@ -61,7 +71,8 @@
     </div>
 </div>
 
-<div id="saveAlertingStatus" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="saveAlertingStatus" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Save all monitors alerting status</h3>

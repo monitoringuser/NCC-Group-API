@@ -23,7 +23,7 @@ return array(
             'monitor'     => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'       => '/monitor[/:action]',
+                    'route'       => '/monitor[/:action][/:accountId]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -45,6 +45,34 @@ return array(
                     'defaults'    => array(
                         'controller' => 'Application\Controller\Auth',
                         'action'     => 'login',
+                    ),
+                ),
+            ),
+            'test'        => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/test/:action/:id/:name',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'Application\Controller\Test',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'account'     => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/account[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'Application\Controller\Account',
+                        'action'     => 'index',
                     ),
                 ),
             ),
@@ -98,7 +126,9 @@ return array(
         'invokables' => array(
             'Application\Controller\Index'   => 'Application\Controller\IndexController',
             'Application\Controller\Auth'    => 'Application\Controller\AuthController',
-            'Application\Controller\Monitor' => 'Application\Controller\MonitorController'
+            'Application\Controller\Monitor' => 'Application\Controller\MonitorController',
+            'Application\Controller\Test'    => 'Application\Controller\TestController',
+            'Application\Controller\Account' => 'Application\Controller\AccountController'
         ),
     ),
     'view_manager'    => array(

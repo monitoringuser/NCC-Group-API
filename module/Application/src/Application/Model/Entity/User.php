@@ -5,6 +5,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Application\Model\Entity\Account as AccountEntity;
 
 class User implements InputFilterAwareInterface
 {
@@ -12,18 +13,26 @@ class User implements InputFilterAwareInterface
      * @var string
      */
     protected $id = '';
+
     /**
      * @var string
      */
     protected $email = '';
+
     /**
      * @var string
      */
     protected $password = '';
+
     /**
      * @var string
      */
     protected $status = '';
+
+    /**
+     * @var array
+     */
+    protected $accounts = array();
 
     /**
      * @var int
@@ -34,6 +43,7 @@ class User implements InputFilterAwareInterface
      * @var string
      */
     protected $createdOn = '';
+
     /**
      * @var InputFilter
      */
@@ -48,7 +58,7 @@ class User implements InputFilterAwareInterface
         $this->email     = (isset($data['email'])) ? $data['email'] : null;
         $this->password  = (isset($data['password'])) ? $data['password'] : null;
         $this->status    = (isset($data['status'])) ? $data['status'] : null;
-        $this->code    = (isset($data['code'])) ? $data['code'] : null;
+        $this->code      = (isset($data['code'])) ? $data['code'] : null;
         $this->createdOn = (isset($data['created_on'])) ? $data['created_on'] : null;
     }
 
@@ -247,9 +257,39 @@ class User implements InputFilterAwareInterface
      */
     public function setCode($code)
     {
-        $this->code = (int) $code;
+        $this->code = (int)$code;
+
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param array $accounts
+     * @return User
+     */
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+
+        return $this;
+    }
+
+    /**
+     * @param AccountEntity $account
+     * @return User
+     */
+    public function addAccount(AccountEntity $account)
+    {
+        $this->accounts[$account->getId()] = $account;
+
+        return $this;
+    }
 
 }
