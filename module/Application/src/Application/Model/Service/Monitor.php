@@ -2,7 +2,8 @@
 namespace Application\Model\Service;
 
 use Common\Model\Service\Core;
-use Application\Model\Entity\Account as AccountEntity;
+use Application\Model\Entity\Account\Account as AccountEntity;
+use Application\Model\Entity\Account\AccountCollection as AccountCollection;
 
 /**
  * Class Monitor
@@ -26,13 +27,28 @@ class Monitor extends Core
 
     /**
      * @param AccountEntity $account
-     * @return array
+     * @return AccountEntity
      */
     public function findAllByAccount(AccountEntity $account)
     {
-        $monitors = $this->getMapper()->findAllByAccounts(array($account));
+        $accountCollectionRequest = new AccountCollection;
+        $accountCollectionRequest->addAccount($account);
 
-        return $monitors;
+        $accountCollectionRequest = $this->findAllByAccounts($accountCollectionRequest);
+        $accountResponse = $accountCollectionRequest->getAccount($account);
+
+        return $accountResponse;
+    }
+
+    /**
+     * @param AccountCollection $accountCollection
+     * @return AccountCollection
+     */
+    public function findAllByAccounts(AccountCollection $accountCollection)
+    {
+        $accountCollectionResponse = $this->getMapper()->findAllByAccounts($accountCollection);
+
+        return $accountCollectionResponse;
     }
 
 }

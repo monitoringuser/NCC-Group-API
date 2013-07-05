@@ -1,10 +1,12 @@
 <?php
-namespace Application\Model\Entity;
+namespace Application\Model\Entity\Monitor;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Application\Model\Entity\Test\TestCollection;
+use Application\Model\Entity\Test\Test;
 
 class Monitor implements InputFilterAwareInterface
 {
@@ -16,25 +18,27 @@ class Monitor implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $accountId = '';
+    protected $label = '';
 
     /**
      * @var string
      */
-    protected $label = '';
-    /**
-     * @var string
-     */
     protected $url = '';
+
     /**
      * @var string
      */
     protected $status = '';
 
     /**
-     * @var float
+     * @var Test
      */
-    protected $lastTestDownloadSpeed = 0;
+    protected $latestTest;
+
+    /**
+     * @var TestCollection
+     */
+    protected $tests;
 
     /**
      * @var bool
@@ -55,14 +59,14 @@ class Monitor implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        $this->id            = (isset($data['id'])) ? $data['id'] : null;
-        $this->accountId     = (isset($data['id'])) ? $data['id'] : null;
-        $this->label         = (isset($data['label'])) ? $data['label'] : null;
-        $this->url           = (isset($data['url'])) ? $data['url'] : null;
-        $this->status        = (isset($data['status'])) ? $data['status'] : null;
-        $this->lastTestDownloadSpeed = (isset($data['lastTestDownloadSpeed'])) ? $data['lastTestDownloadSpeed'] : null;
-        $this->alerting      = (isset($data['alerting'])) ? $data['alerting'] : null;
-        $this->createdOn     = (isset($data['created_on'])) ? $data['created_on'] : null;
+        $this->id         = (isset($data['id'])) ? $data['id'] : null;
+        $this->label      = (isset($data['label'])) ? $data['label'] : null;
+        $this->url        = (isset($data['url'])) ? $data['url'] : null;
+        $this->status     = (isset($data['status'])) ? $data['status'] : null;
+        $this->latestTest = (isset($data['latestTest'])) ? $data['latestTest'] : null;
+        $this->tests      = (isset($data['tests'])) ? $data['tests'] : null;
+        $this->alerting   = (isset($data['alerting'])) ? $data['alerting'] : null;
+        $this->createdOn  = (isset($data['created_on'])) ? $data['created_on'] : null;
     }
 
     /**
@@ -143,25 +147,6 @@ class Monitor implements InputFilterAwareInterface
     }
 
     /**
-     * @param float $downloadSpeed
-     * @return Monitor
-     */
-    public function setLastTestDownloadSpeed($downloadSpeed)
-    {
-        $this->lastTestDownloadSpeed = (float)$downloadSpeed;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLastTestDownloadSpeed()
-    {
-        return $this->lastTestDownloadSpeed;
-    }
-
-    /**
      * @param string $id
      * @return Monitor
      */
@@ -197,25 +182,6 @@ class Monitor implements InputFilterAwareInterface
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * @param string $accountId
-     * @return Monitor
-     */
-    public function setAccountId($accountId)
-    {
-        $this->accountId = (string)$accountId;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
     }
 
     /**
@@ -273,6 +239,44 @@ class Monitor implements InputFilterAwareInterface
     public function getAlerting()
     {
         return $this->alerting;
+    }
+
+    /**
+     * @param Test $latestTest
+     * @return Monitor
+     */
+    public function setLatestTest(Test $latestTest)
+    {
+        $this->latestTest = $latestTest;
+
+        return $this;
+    }
+
+    /**
+     * @return Test
+     */
+    public function getLatestTest()
+    {
+        return $this->latestTest;
+    }
+
+    /**
+     * @param TestCollection $tests
+     * @return Monitor
+     */
+    public function setTests(TestCollection $tests)
+    {
+        $this->tests = $tests;
+
+        return $this;
+    }
+
+    /**
+     * @return TestCollection
+     */
+    public function getTests()
+    {
+        return $this->tests;
     }
 
 

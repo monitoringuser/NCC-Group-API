@@ -2,6 +2,7 @@
 namespace Application\Model\Service;
 
 use Common\Model\Service\Core;
+use Application\Model\Entity\Account\AccountCollection;
 
 /**
  * Class Account
@@ -12,19 +13,17 @@ class Account extends Core
 {
 
     /**
-     * @return array
+     * @return AccountCollection
      */
     public function findAll()
     {
-        $accounts = $this->getMapper()->findAll();
+        $accountCollection = $this->getMapper()->findAll();
 
         // save accounts to identity
-        foreach($accounts as $account) {
-            $authService = $this->getServiceLocator()->get('AuthenticationService');
-            $authService->getIdentity()->addAccount($account);
-        }
+        $authService = $this->getServiceLocator()->get('AuthenticationService');
+        $authService->getIdentity()->setAccounts($accountCollection);
 
-        return $accounts;
+        return $accountCollection;
     }
 
 }

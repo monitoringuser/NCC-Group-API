@@ -1,7 +1,12 @@
 <?php
 namespace Application\Model\Mapper\Monitor;
 
-use Application\Model\Entity\Monitor as MonitorEntity;
+use Application\Model\Entity\Account\AccountCollection;
+use Application\Model\Entity\Account\Account as AccountEntity;
+use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
+use Application\Model\Entity\Monitor\MonitorCollection;
+use Application\Model\Entity\User as UserEntity;
+use Application\Model\Mapper\Test\TestRest as TestMapper;
 use Common\Model\Mapper\Core;
 
 /**
@@ -19,14 +24,13 @@ class MonitorRest extends Core implements MonitorInterface
     static public function mapToExternal(MonitorEntity $monitorEntity)
     {
         $data = array(
-            'id'                    => $monitorEntity->getId(),
-            'accountId'             => $monitorEntity->getAccountId(),
-            'label'                 => $monitorEntity->getLabel(),
-            'url'                   => $monitorEntity->getUrl(),
-            'status'                => $monitorEntity->getStatus(),
-            'lastTestDownloadSpeed' => $monitorEntity->getLastTestDownloadSpeed(),
-            'alerting'              => $monitorEntity->getAlerting(),
-            'created_on'            => $monitorEntity->getCreatedOn(),
+            'id'         => $monitorEntity->getId(),
+            'label'      => $monitorEntity->getLabel(),
+            'url'        => $monitorEntity->getUrl(),
+            'status'     => $monitorEntity->getStatus(),
+            'latestTest' => $monitorEntity->getLatestTest(),
+            'tests'      => $monitorEntity->getTests(),
+            'created_on' => $monitorEntity->getCreatedOn(),
         );
 
         return $data;
@@ -34,46 +38,57 @@ class MonitorRest extends Core implements MonitorInterface
 
     /**
      * @param array  $data
-     * @param string $accountId
      * @return MonitorEntity $monitorEntity
      */
-    static public function mapToInternal(array $data, $accountId)
+    static public function mapToInternal(array $data)
     {
         $monitorEntity = new MonitorEntity;
         $monitorEntity->setId($data['Id'])
-            ->setAccountId($accountId)
-            ->setLabel($data['Label'])
             ->setUrl($data['Url'])
+            ->setLabel($data['Label'])
             ->setStatus($data['CurrentStatus'])
-            ->setLastTestDownloadSpeed($data['LastTestDownloadSpeed'])
+            ->setLatestTest(
+                TestMapper::mapToInternal(
+                    array(
+                        'Id'           => '',
+                        'TotalSeconds' => $data['LastTestDownloadSpeed']
+                    )
+                )
+            )
             ->setAlerting($data['Alerting']);
-
-        //->setCode($data['Response']['Code']);
-        //->setCreatedOn($data['Response']['created_on']);
 
         return $monitorEntity;
     }
 
     /**
-     * @param array $accounts
-     * @return array
+     * @param AccountCollection $accountCollectionRequest
+     * @return AccountCollection
      */
-    public function findAllByAccounts(array $accounts)
+    public function findAllByAccounts(AccountCollection $accountCollectionRequest)
     {
-        $data = array();
-        foreach ($accounts as $account) {
-            $data[] = $account->getId();
+        $accounts = array();
+        foreach ($accountCollectionRequest->getAccounts() as $accountEntityRequest) {
+            $accounts[] = $accountEntityRequest->getId();
         }
-        $data = implode(',', $data);
+        $accounts = implode(',', $accounts);
 
-        $response = $this->getDao()->findAllByAccounts($data);
+        $response = $this->getDao()->findAllByAccounts($accounts);
 
-        $monitors = array();
-        foreach ($response['Response']['Account']['Pages']['Page'] as $monitor) {
-            $monitors[] = self::mapToInternal($monitor, $response['Request']['AccountId']);
-        }
+        $accountCollectionResponse = new AccountCollection;
+        //foreach ($response['Response']['Account'] as $account) {
+            $accountEntityResponse = new AccountEntity;
+            $accountEntityResponse->setId($response['Response']['Account']['AccountId']);
 
-        return $monitors;
+            $monitorCollection = new MonitorCollection;
+            foreach ($response['Response']['Account']['Pages']['Page'] as $monitor) {
+                $monitorCollection->addMonitor(self::mapToInternal($monitor));
+            }
+            $accountCollectionResponse->addAccount(
+                $accountEntityResponse->setMonitors($monitorCollection)
+            );
+        //}
+
+        return $accountCollectionResponse;
     }
 
 

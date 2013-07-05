@@ -5,7 +5,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Application\Model\Entity\Account as AccountEntity;
+use Application\Model\Entity\Account\AccountCollection;
 
 class User implements InputFilterAwareInterface
 {
@@ -263,7 +263,7 @@ class User implements InputFilterAwareInterface
     }
 
     /**
-     * @return array
+     * @return AccountCollection
      */
     public function getAccounts()
     {
@@ -271,25 +271,18 @@ class User implements InputFilterAwareInterface
     }
 
     /**
-     * @param array $accounts
+     * @param AccountCollection $accounts
      * @return User
      */
-    public function setAccounts($accounts)
+    public function setAccounts(AccountCollection $accounts)
     {
         $this->accounts = $accounts;
 
         return $this;
     }
 
-    /**
-     * @param AccountEntity $account
-     * @return User
-     */
-    public function addAccount(AccountEntity $account)
-    {
-        $this->accounts[$account->getId()] = $account;
 
-        return $this;
-    }
+
+
 
 }

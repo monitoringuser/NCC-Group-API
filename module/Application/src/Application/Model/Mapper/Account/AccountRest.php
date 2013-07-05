@@ -1,7 +1,8 @@
 <?php
 namespace Application\Model\Mapper\Account;
 
-use Application\Model\Entity\Account as AccountEntity;
+use Application\Model\Entity\Account\Account as AccountEntity;
+use Application\Model\Entity\Account\AccountCollection;
 use Common\Model\Mapper\Core;
 
 /**
@@ -40,20 +41,20 @@ class AccountRest extends Core implements AccountInterface
     }
 
     /**
-     * @return array
+     * @return AccountCollection
      */
     public function findAll()
     {
         $response = $this->getDao()->findAll();
-// @TODO single account does not return array???
-//var_dump($response['Response']['Account']); exit;
-        //$accounts = array();
+        // @TODO single account does not return array???
+        //var_dump($response['Response']['Account']); exit;
+        $accountCollection = new AccountCollection;
         //foreach ($response['Response'] as $account) {
             //$accounts[] = self::mapToInternal($account);
-            $accounts[] = self::mapToInternal($response['Response']['Account']);
+            $accountCollection->addAccount(self::mapToInternal($response['Response']['Account']));
         //}
 
-        return $accounts;
+        return $accountCollection;
     }
 
 

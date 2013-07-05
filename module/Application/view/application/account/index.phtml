@@ -16,7 +16,7 @@
             </thead>
             <tbody>
             <?php
-            foreach ($this->accounts as $account) {
+            foreach ($this->accounts->getAccounts() as $account) {
                 echo '<tr>';
                 echo '<td>' . $account->getId() . '</td>';
                 echo '<td>' . $account->getName() . '</td>';

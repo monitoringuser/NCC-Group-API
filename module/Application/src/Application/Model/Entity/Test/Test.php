@@ -1,5 +1,5 @@
 <?php
-namespace Application\Model\Entity;
+namespace Application\Model\Entity\Test;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -8,6 +8,11 @@ use Zend\InputFilter\InputFilterInterface;
 
 class Test implements InputFilterAwareInterface
 {
+
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var float
@@ -76,6 +81,25 @@ class Test implements InputFilterAwareInterface
     public function setTotalSeconds($totalSeconds)
     {
         $this->totalSeconds = (float) $totalSeconds;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     * @return Test
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }

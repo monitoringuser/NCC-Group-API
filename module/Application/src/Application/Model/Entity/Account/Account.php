@@ -1,53 +1,38 @@
 <?php
-namespace Application\Model\Entity;
+namespace Application\Model\Entity\Account;
 
+use Application\Model\Entity\Monitor\MonitorCollection;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class TestRange implements InputFilterAwareInterface
+class Account implements InputFilterAwareInterface
 {
     /**
      * @var string
      */
-    protected $accountId = '';
+    protected $id = '';
 
     /**
      * @var string
      */
-    protected $monitorId = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    protected $startDate = '';
+    protected $testStartDate = '';
 
     /**
      * @var string
      */
-    protected $endDate = '';
-
-    /**
-     * @var int
-     */
-    protected $total = 0;
-
-    /**
-     * @var int
-     */
-    protected $limit = 0;
-
-    /**
-     * @var int
-     */
-    protected $offset = 0;
+    protected $testEndDate = '';
 
     /**
      * @var array
      */
-    protected $tests = array();
-
+    protected $monitors = array();
 
     /**
      * @var InputFilter
@@ -59,7 +44,9 @@ class TestRange implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        $this->id            = (isset($data['id'])) ? $data['id'] : null;
+        $this->id       = (isset($data['id'])) ? $data['id'] : null;
+        $this->name     = (isset($data['name'])) ? $data['name'] : null;
+        $this->monitors = (isset($data['monitors'])) ? $data['monitors'] : null;
     }
 
     /**
@@ -139,6 +126,92 @@ class TestRange implements InputFilterAwareInterface
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return Account
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+
+        return $this;
+    }
+
+    /**
+     * @return MonitorCollection
+     */
+    public function getMonitors()
+    {
+        return $this->monitors;
+    }
+
+    /**
+     * @param MonitorCollection $monitors
+     * @return Account
+     */
+    public function setMonitors(MonitorCollection $monitors)
+    {
+        $this->monitors = $monitors;
+
+        return $this;
+    }
+
+    /**
+     * @param string $testEndDate
+     * @return Account
+     */
+    public function setTestEndDate($testEndDate)
+    {
+        $this->testEndDate = (string)$testEndDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTestEndDate()
+    {
+        if (empty($this->testEndDate)) {
+            $date              = new \DateTime();
+            $this->testEndDate = $date->format('Y-m-d H:i:s');
+        }
+
+        return $this->testEndDate;
+    }
+
+    /**
+     * @param string $testStartDate
+     * @return Account
+     */
+    public function setTestStartDate($testStartDate)
+    {
+        $this->testStartDate = (string)$testStartDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTestStartDate()
+    {
+        if (empty($this->testEndDate)) {
+            $date = new \DateTime();
+            $date->sub(new \DateInterval('P1D'));
+            $this->testEndDate = $date->format('Y-m-d H:i:s');
+        }
+
+        return $this->testStartDate;
+    }
 
 
 }
