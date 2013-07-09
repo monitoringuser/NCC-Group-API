@@ -10,6 +10,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
         "eddiejaoude/zf2-common": "dev-master",
+        "eddiejaoude/highcharts-php": "dev-master",
         "zendframework/zftool": "dev-master"
     },
     "require-dev": {
@@ -32,6 +33,10 @@
         {
             "type": "vcs",
             "url": "git://github.com/eddiejaoude/zf2-common.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git://github.com/eddiejaoude/highcharts-php.git"
         }
 
     ],
