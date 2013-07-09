@@ -20,6 +20,11 @@ class Test implements InputFilterAwareInterface
     protected $totalSeconds = 0;
 
     /**
+     * @var string
+     */
+    protected $datetime = '';
+
+    /**
      * @var InputFilter
      */
     protected $inputFilter;
@@ -102,6 +107,25 @@ class Test implements InputFilterAwareInterface
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * @param string $datetime
+     * @return Test
+     */
+    public function setDatetime($datetime)
+    {
+        $this->datetime = (string) $datetime;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
     }
 
 

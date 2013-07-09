@@ -1,9 +1,10 @@
 <?php
 namespace Application\Model\Mapper\Test;
 
-use Application\Model\Entity\Account\Account as AccountEntity;
 use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
+use Application\Model\Entity\Monitor\MonitorCollection;
 use Application\Model\Entity\Test\Test as TestEntity;
+use Application\Model\Entity\Test\TestCollection;
 use Common\Model\Mapper\Core;
 
 /**
@@ -23,6 +24,7 @@ class TestRest extends Core implements TestInterface
         $data = array(
             'id'           => $testEntity->getId(),
             'totalSeconds' => $testEntity->getTotalSeconds(),
+            'datetime' => $testEntity->getDatetime()
         );
 
         return $data;
@@ -36,25 +38,42 @@ class TestRest extends Core implements TestInterface
     {
         $testEntity = new TestEntity;
         $testEntity->setId($data['Id'])
+            ->setDatetime($data['GmtDateTime'])
             ->setTotalSeconds($data['TotalSeconds']);
 
         return $testEntity;
     }
 
     /**
-     * @param AccountEntity $accountEntity
-     * @param MonitorEntity $monitorEntity
-     * @return array
+     * @param MonitorCollection $monitorCollection
+     * @return MonitorCollection
      */
-    public function findAllByMonitorAndDate(AccountEntity $accountEntity, MonitorEntity $monitorEntity)
+    public function findAllByMonitorsAndDate(MonitorCollection $monitorCollection)
     {
-        $response = $this->getDao()->findAllByAccounts();
-        var_dump($response);
-        exit;
+        $response = $this->getDao()->findAllByMonitorsAndDate(
+            $monitorCollection->getIdsAsArray(),
+            $monitorCollection->getStartDate(),
+            $monitorCollection->getEndDate()
+        );
 
-        //$tests[] = self::mapToInternal($response['Response']['Account']);
+        $testResults = $response['Response']['Account']['Pages']['Page']['TestResults'];
+        $testCollection = new TestCollection();
+        $testCollection->setCount($testResults['Count'])
+            ->setLimit($testResults['Limit'])
+            ->setOffset($testResults['Offset']);
 
-        return $tests;
+        foreach ($response['Response']['Account']['Pages']['Page']['TestResults']['TestResult'] as $test) {
+            $testCollection->addTest(self::mapToInternal($test));
+        }
+
+        $monitor = $response['Response']['Account']['Pages']['Page'];
+        $monitorEntity = new MonitorEntity();
+        $monitorEntity->setId($monitor['Id'])
+            ->setUrl($monitor['Url'])
+            ->setLabel($monitor['Label'])
+            ->setTests($testCollection);
+
+        return $monitorCollection->addMonitor($monitorEntity);
     }
 
 

@@ -2,8 +2,7 @@
 namespace Application\Model\Service;
 
 use Common\Model\Service\Core;
-use Application\Model\Entity\Account as AccountEntity;
-use Application\Model\Entity\Monitor as MonitorEntity;
+use Application\Model\Entity\Monitor\MonitorCollection;
 
 /**
  * Class Monitor
@@ -14,13 +13,12 @@ class Test extends Core
 {
 
     /**
-     * @param AccountEntity $accountEntity
-     * @param MonitorEntity $monitorEntity
+     * @param MonitorCollection $monitorCollection
      * @return array
      */
-    public function findAllByMonitorAndDate(AccountEntity $accountEntity, MonitorEntity $monitorEntity)
+    public function findAllByMonitorsAndDate(MonitorCollection $monitorCollection)
     {
-        $monitors = $this->getMapper()->findAllByMonitorAndDate($accountEntity, $monitorEntity);
+        $monitors = $this->getMapper()->findAllByMonitorsAndDate($monitorCollection);
 
         return $monitors;
     }

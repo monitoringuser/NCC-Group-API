@@ -18,6 +18,21 @@ class TestCollection
     protected $tests;
 
     /**
+     * @var int
+     */
+    protected $offset = 0;
+
+    /**
+     * @var int
+     */
+    protected $limit = 100;
+
+    /**
+     * @var int
+     */
+    protected $count = 0;
+
+    /**
      * Alias for getAccounts()
      *
      * @return array
@@ -95,6 +110,63 @@ class TestCollection
         }
 
         return false;
+    }
+
+    /**
+     * @param int $count
+     * @return TestCollection
+     */
+    public function setCount($count)
+    {
+        $this->count = (int) $count;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int $limit
+     * @return TestCollection
+     */
+    public function setLimit($limit)
+    {
+        $this->limit = (int) $limit;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $offset
+     * @return TestCollection
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = (int) $offset;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->offset;
     }
 
 

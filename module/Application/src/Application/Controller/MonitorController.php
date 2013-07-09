@@ -3,7 +3,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Model\Entity\Account as AccountEntity;
+use Application\Model\Entity\Account\Account as AccountEntity;
 
 /**
  * Class MonitorController

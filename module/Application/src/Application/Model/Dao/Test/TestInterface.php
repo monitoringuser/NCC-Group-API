@@ -11,9 +11,10 @@ interface TestInterface
 
     /**
      * @param array $monitors
-     * @param string      $date
+     * @param string      $startDate
+     * @param string      $endDate
      * @return array
      */
-    public function findAllByMonitorAndDate(array $monitors, $date);
+    public function findAllByMonitorsAndDate(array $monitors, $startDate, $endDate);
 
 }

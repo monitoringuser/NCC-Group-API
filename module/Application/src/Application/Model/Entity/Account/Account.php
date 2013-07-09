@@ -20,19 +20,9 @@ class Account implements InputFilterAwareInterface
     protected $name = '';
 
     /**
-     * @var string
+     * @var AccountCollection
      */
-    protected $testStartDate = '';
-
-    /**
-     * @var string
-     */
-    protected $testEndDate = '';
-
-    /**
-     * @var array
-     */
-    protected $monitors = array();
+    protected $monitors;
 
     /**
      * @var InputFilter
@@ -162,55 +152,6 @@ class Account implements InputFilterAwareInterface
         $this->monitors = $monitors;
 
         return $this;
-    }
-
-    /**
-     * @param string $testEndDate
-     * @return Account
-     */
-    public function setTestEndDate($testEndDate)
-    {
-        $this->testEndDate = (string)$testEndDate;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTestEndDate()
-    {
-        if (empty($this->testEndDate)) {
-            $date              = new \DateTime();
-            $this->testEndDate = $date->format('Y-m-d H:i:s');
-        }
-
-        return $this->testEndDate;
-    }
-
-    /**
-     * @param string $testStartDate
-     * @return Account
-     */
-    public function setTestStartDate($testStartDate)
-    {
-        $this->testStartDate = (string)$testStartDate;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTestStartDate()
-    {
-        if (empty($this->testEndDate)) {
-            $date = new \DateTime();
-            $date->sub(new \DateInterval('P1D'));
-            $this->testEndDate = $date->format('Y-m-d H:i:s');
-        }
-
-        return $this->testStartDate;
     }
 
 

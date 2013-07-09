@@ -38,6 +38,7 @@ class AuthRest implements AuthInterface, DaoInterface
             $response = json_encode($response);
         }
 
+        // Zend\Json\Json::decode()
         $reader = new \Zend\Config\Reader\Json();
         $result = $reader->fromString($response);
 

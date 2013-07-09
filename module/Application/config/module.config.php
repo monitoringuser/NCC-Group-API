@@ -51,7 +51,7 @@ return array(
             'test'        => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'       => '/test/:action/:id/:name',
+                    'route'       => '/test/:action/:monitorId',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',

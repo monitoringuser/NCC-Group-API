@@ -26,6 +26,7 @@ class MonitorRest extends Core implements MonitorInterface, DaoInterface
             ) . '/Return/[Account[AccountId,Name,Pages[Page[Id,Url,Label,CurrentStatus,LastTestDownloadSpeed,Alerting]]]]/AccountId/' . (string) $accounts . '/Format/json'
         );
 
+        // Zend\Json\Json::decode()
         $reader = new Json();
         $result = $reader->fromString($response);
 

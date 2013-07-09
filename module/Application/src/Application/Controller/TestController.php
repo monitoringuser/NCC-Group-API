@@ -1,8 +1,9 @@
 <?php
 namespace Application\Controller;
 
-use Application\Model\Entity\Account as AccountEntity;
-use Application\Model\Entity\Monitor as MonitorEntity;
+use Application\Model\Entity\Account\Account as AccountEntity;
+use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
+use Application\Model\Entity\Monitor\MonitorCollection;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -19,18 +20,16 @@ class TestController extends AbstractActionController
      */
     public function indexAction()
     {
-        $accountId = (string)$this->params()->fromRoute('id', null);
-        $monitorId = (string)$this->params()->fromRoute('name', null);
+        $monitorId = (string)$this->params()->fromRoute('monitorId', null);
 
-
-        $accountEntity = new AccountEntity();
         $monitorEntity = new MonitorEntity();
+        $monitorEntity->setId($monitorId);
+
+        $monitorCollection = new MonitorCollection();
+        $monitorCollection->addMonitor($monitorEntity);
 
         $testService = $this->getServiceLocator()->get('Application\Model\Service\Test');
-        $tests       = $testService->findAllByMonitorAndDate(
-            $accountEntity->setId($accountId),
-            $monitorEntity->setId($monitorId)
-        );
+        $tests       = $testService->findAllByMonitorsAndDate($monitorCollection);
 
         return array(
             'tests' => $tests

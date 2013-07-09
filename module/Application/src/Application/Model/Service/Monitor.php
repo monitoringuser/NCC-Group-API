@@ -35,9 +35,8 @@ class Monitor extends Core
         $accountCollectionRequest->addAccount($account);
 
         $accountCollectionRequest = $this->findAllByAccounts($accountCollectionRequest);
-        $accountResponse = $accountCollectionRequest->getAccount($account);
 
-        return $accountResponse;
+        return $accountCollectionRequest;
     }
 
     /**

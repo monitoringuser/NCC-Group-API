@@ -30,6 +30,21 @@ class AccountCollection
     /**
      * @return array
      */
+    public function getIdsAsArray() {
+        return array_keys($this->getAccounts());
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @return array
+     */
     public function getAccounts()
     {
         return $this->accounts;
