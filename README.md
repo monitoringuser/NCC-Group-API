@@ -8,6 +8,7 @@ Screenshots
 
 ![Screenshot 1](/screenshots/nccgroup-api-mac.png "Screenshot 1")
 ![Screenshot 2](/screenshots/nccgroup-api-iphone.png "Screenshot 2")
+![Screenshot 3](/screenshots/nccgroup-api-msc-graph.png "Screenshot 3")
 
 
 Resources
