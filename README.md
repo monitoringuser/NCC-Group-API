@@ -3,6 +3,12 @@ NCC-Group-API
 
 Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tree/poc
 
+Screenshots
+===========
+
+![Screenshot 1](/screenshots/nccgroup-api-mac-iphone.png "Screenshot 1")
+![Screenshot 2](/screenshots/nccgroup-api-mac-graph.png "Screenshot 2")
+
 
 Resources
 =========
