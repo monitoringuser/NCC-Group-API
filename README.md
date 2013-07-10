@@ -8,6 +8,8 @@ Documentation
 Please see wiki pages for documentation, including request/response examples
 https://github.com/eddiejaoude/NCC-Group-API/wiki
 
+Also note, that each page in the application has a 'query' button, that demostrates what API request query was used to retrieve the information for that page.
+
 Screenshots
 ===========
 
