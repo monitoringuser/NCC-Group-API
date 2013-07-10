@@ -10,6 +10,9 @@ https://github.com/eddiejaoude/NCC-Group-API/wiki
 
 Also note, that each page in the application has a 'query' button, that demostrates what API request query was used to retrieve the information for that page.
 
+Example below:
+![API Query Button](/screenshots/nccgroup-api-query-button.png "API Query Button")
+
 Screenshots
 ===========
 
