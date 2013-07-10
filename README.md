@@ -6,7 +6,7 @@ Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tre
 Screenshots
 ===========
 
-![Screenshot 1](https://github.com/eddiejaoude/NCC-Group-API/blob/master/screenshots/nccgroup-api-mac.png "Screenshot 1")
+![Screenshot 1](/master/screenshots/nccgroup-api-mac.png "Screenshot 1")
 
 
 Resources
