@@ -7,6 +7,7 @@ Screenshots
 ===========
 
 ![Screenshot 1](/screenshots/nccgroup-api-mac.png "Screenshot 1")
+![Screenshot 2](/screenshots/nccgroup-api-iphone.png "Screenshot 2")
 
 
 Resources
