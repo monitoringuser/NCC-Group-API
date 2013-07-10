@@ -20,8 +20,6 @@ $seriesCollection = new HighCharts\Entity\SeriesCollection();
 foreach ($this->tests->getMonitors() as $monitor) {
     $series = new HighCharts\Entity\Series();
     $series->setName($monitor->getLabel());
-//        ->setPointStart($startDateTime->getTimestamp() * 1000)
-//        ->setPointInterval(60*60*24*1000);
 
     $data = array();
     foreach ($monitor->getTests()->getData() as $test) {
