@@ -6,9 +6,8 @@ Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tre
 Screenshots
 ===========
 
-![Screenshot 1](/screenshots/nccgroup-api-mac.png "Screenshot 1")
-![Screenshot 2](/screenshots/nccgroup-api-iphone.png "Screenshot 2")
-![Screenshot 3](/screenshots/nccgroup-api-mac-graph.png "Screenshot 3")
+![Screenshot 1](/screenshots/nccgroup-api-mac-iphone.png "Screenshot 1")
+![Screenshot 2](/screenshots/nccgroup-api-mac-graph.png "Screenshot 2")
 
 
 Resources
