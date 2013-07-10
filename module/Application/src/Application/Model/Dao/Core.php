@@ -44,6 +44,9 @@ class Core
     }
 
     /**
+     * @todo caching event
+     * @todo logging request/response event (audit)
+     *
      * @param string $request
      * @return array
      */

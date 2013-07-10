@@ -26,9 +26,8 @@ class TestRest extends Core implements TestInterface, DaoInterface
         $startDateTime = explode(' ', $startDateTime);
         $endDateTime = explode(' ', $endDateTime);
 
-        $response = file_get_contents(
-            'https://api.siteconfidence.co.uk/current/' . $this->getIdentity()->getId(
-            ) . '/Return/[Account[Pages[Page[Id,Url,Label,TestResults[Count,Limit,Offset,TestResult[Id,ResultId,GmtDateTime,TotalSeconds]]]]]]/AccountId/' .
+        $response = $this->getClient(
+            '/Return/[Account[Pages[Page[Id,Url,Label,TestResults[Count,Limit,Offset,TestResult[Id,ResultId,GmtDateTime,TotalSeconds]]]]]]/AccountId/' .
             implode(',', $this->getIdentity()->getAccounts()->getIdsAsArray()) . '/Id/' .
             implode(',', $monitors) .
             '/StartDate/' . $startDateTime[0] .
@@ -38,11 +37,7 @@ class TestRest extends Core implements TestInterface, DaoInterface
             '/LimitTestResults/1000/Format/json'
         );
 
-        // Zend\Json\Json::decode()
-        $reader = new Json();
-        $result = $reader->fromString($response);
-
-        return $result;
+        return $response;
     }
 
 
