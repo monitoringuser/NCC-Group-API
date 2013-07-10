@@ -3,6 +3,11 @@ NCC-Group-API
 
 Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tree/poc
 
+Documentation
+=============
+Please see wiki pages for documentation, including request/response examples
+https://github.com/eddiejaoude/NCC-Group-API/wiki
+
 Screenshots
 ===========
 
