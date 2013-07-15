@@ -33,6 +33,24 @@ class TestCollection
     protected $count = 0;
 
     /**
+     * @var string
+     */
+    protected $startDate = '';
+
+    /**
+     * @var string
+     */
+    protected $endDate = '';
+
+    /**
+     * @return string
+     */
+    public function getDateRange()
+    {
+        return $this->getStartDate() . ' - ' . $this->getEndDate();
+    }
+
+    /**
      * Alias for getAccounts()
      *
      * @return array
@@ -167,6 +185,53 @@ class TestCollection
     public function getOffset()
     {
         return $this->offset;
+    }
+
+    /**
+     * @param string $endDate
+     * @return TestCollection
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = (string) $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndDate()
+    {
+        if (empty($this->endDate)) {
+            $date = new \DateTime();
+            $this->endDate = $date->format('Y-m-d H:i:s');
+        }
+        return $this->endDate;
+    }
+
+    /**
+     * @param string $startDate
+     * @return TestCollection
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = (string) $startDate;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStartDate()
+    {
+        if (empty($this->startDate)) {
+            $date = new \DateTime();
+            $date->sub(new \DateInterval('P1D'));
+            $this->startDate = $date->format('Y-m-d H:i:s');
+        }
+        return $this->startDate;
     }
 
 

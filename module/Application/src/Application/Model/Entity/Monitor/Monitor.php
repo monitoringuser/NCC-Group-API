@@ -41,6 +41,16 @@ class Monitor implements InputFilterAwareInterface
     protected $tests;
 
     /**
+     * @var array
+     */
+    protected $testCollections = array();
+
+    /**
+     * @var string
+     */
+    protected $activeTestCollection;
+
+    /**
      * @var bool
      */
     protected $alerting;
@@ -261,12 +271,29 @@ class Monitor implements InputFilterAwareInterface
     }
 
     /**
-     * @param TestCollection $tests
+     * @return array
+     */
+    public function getTestCollections()
+    {
+        return $this->testCollections;
+    }
+
+    /**
+     * @param TestCollection $testCollection
+     * @return TestCollection
+     */
+    public function getTestCollectionByCollection(TestCollection $testCollection)
+    {
+        return $this->testCollections[$testCollection->getDateRange()];
+    }
+
+    /**
+     * @param TestCollection $testCollection
      * @return Monitor
      */
-    public function setTests(TestCollection $tests)
+    public function addTestCollection(TestCollection $testCollection)
     {
-        $this->tests = $tests;
+        $this->testCollections[$testCollection->getDateRange()] = $testCollection;
 
         return $this;
     }
@@ -274,9 +301,38 @@ class Monitor implements InputFilterAwareInterface
     /**
      * @return TestCollection
      */
-    public function getTests()
+    public function getFirstTestCollection()
     {
-        return $this->tests;
+        reset($this->testCollections);
+        $firstItemKey = key($this->testCollections);
+
+        return $this->testCollections[$firstItemKey];
+    }
+
+    /**
+     * Get active test collection
+     *
+     * If no collection is active, then the first collection is returned
+     *
+     * @return TestCollection
+     */
+    public function getActiveTestCollection()
+    {
+        if (empty($this->activeTestCollection)) {
+            return $this->getFirstTestCollection();
+        }
+        return $this->testCollections[$this->activeTestCollection];
+    }
+
+    /**
+     * @param TestCollection $activeTestCollection
+     * @return Monitor
+     */
+    public function setActiveTestCollection(TestCollection $activeTestCollection)
+    {
+        $this->activeTestCollection = $activeTestCollection->getDateRange();
+
+        return $this;
     }
 
 

@@ -25,14 +25,11 @@ class TestController extends AbstractActionController
         $monitorEntity = new MonitorEntity();
         $monitorEntity->setId($monitorId);
 
-        $monitorCollection = new MonitorCollection();
-        $monitorCollection->addMonitor($monitorEntity);
-
         $testService = $this->getServiceLocator()->get('Application\Model\Service\Test');
-        $tests       = $testService->findAllByMonitorsAndDate($monitorCollection);
+        $monitorEntity = $testService->findLast24hrs($monitorEntity);
 
         return array(
-            'tests' => $tests
+            'monitor' => $monitorEntity
         );
     }
 

@@ -1,8 +1,10 @@
 <?php
 namespace Application\Model\Service;
 
-use Common\Model\Service\Core;
 use Application\Model\Entity\Monitor\MonitorCollection;
+use Application\Model\Entity\Test\TestCollection;
+use Common\Model\Service\Core;
+use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
 
 /**
  * Class Monitor
@@ -13,14 +15,40 @@ class Test extends Core
 {
 
     /**
-     * @param MonitorCollection $monitorCollection
-     * @return array
+     * @param MonitorEntity $monitorEntity
+     * @return MonitorEntity
      */
-    public function findAllByMonitorsAndDate(MonitorCollection $monitorCollection)
+    public function findAllByMonitorAndDate(MonitorEntity $monitorEntity)
     {
-        $monitors = $this->getMapper()->findAllByMonitorsAndDate($monitorCollection);
+        $monitorEntity  = $this->getMapper()->findAllByMonitorAndDate($monitorEntity);
 
-        return $monitors;
+        return $monitorEntity;
+    }
+
+    /**
+     * @param MonitorEntity $monitorEntity
+     * @return MonitorEntity
+     */
+    public function findLast24hrs(MonitorEntity $monitorEntity)
+    {
+        // last 24hrs
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('P1D'));
+        $startDate = $date->format('Y-m-d H:i:s');
+
+        $date = new \DateTime();
+        $endDate = $date->format('Y-m-d H:i:s');
+
+        $testCollectionCurrent = new TestCollection();
+        $testCollectionCurrent->setStartDate($startDate)
+            ->setEndDate($endDate);
+
+        $monitorCurrent  = $this->findAllByMonitorAndDate(
+            $monitorEntity->addTestCollection($testCollectionCurrent)
+                    ->setActiveTestCollection($testCollectionCurrent)
+        );
+
+        return $monitorEntity;
     }
 
 }

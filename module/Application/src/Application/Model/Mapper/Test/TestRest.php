@@ -45,35 +45,34 @@ class TestRest extends Core implements TestInterface
     }
 
     /**
-     * @param MonitorCollection $monitorCollection
-     * @return MonitorCollection
+     * @param MonitorEntity $monitorEntity
+     * @return MonitorEntity
      */
-    public function findAllByMonitorsAndDate(MonitorCollection $monitorCollection)
+    public function findAllByMonitorAndDate(MonitorEntity $monitorEntity)
     {
-        $response = $this->getDao()->findAllByMonitorsAndDate(
-            $monitorCollection->getIdsAsArray(),
-            $monitorCollection->getStartDate(),
-            $monitorCollection->getEndDate()
+        $response = $this->getDao()->findAllByMonitorAndDate(
+            $monitorEntity->getId(),
+            $monitorEntity->getActiveTestCollection()->getStartDate(),
+            $monitorEntity->getActiveTestCollection()->getEndDate()
         );
 
         $testResults = $response['Response']['Account']['Pages']['Page']['TestResults'];
-        $testCollection = new TestCollection();
-        $testCollection->setCount($testResults['Count'])
+
+        $monitorEntity->getFirstTestCollection()->setCount($testResults['Count'])
             ->setLimit($testResults['Limit'])
             ->setOffset($testResults['Offset']);
 
         foreach ($response['Response']['Account']['Pages']['Page']['TestResults']['TestResult'] as $test) {
-            $testCollection->addTest(self::mapToInternal($test));
+            $monitorEntity->getActiveTestCollection()->addTest(self::mapToInternal($test));
         }
 
         $monitor = $response['Response']['Account']['Pages']['Page'];
-        $monitorEntity = new MonitorEntity();
+
         $monitorEntity->setId($monitor['Id'])
             ->setUrl($monitor['Url'])
-            ->setLabel($monitor['Label'])
-            ->setTests($testCollection);
+            ->setLabel($monitor['Label']);
 
-        return $monitorCollection->addMonitor($monitorEntity);
+        return $monitorEntity;
     }
 
 

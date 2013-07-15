@@ -1,15 +1,15 @@
 <?php
 namespace Application\Model\Mapper\Test;
 
-use Application\Model\Entity\Monitor\MonitorCollection;
+use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
 
 interface TestInterface
 {
 
     /**
-     * @param MonitorCollection $monitorCollection
-     * @return MonitorCollection
+     * @param MonitorEntity $monitorEntity
+     * @return MonitorEntity
      */
-    public function findAllByMonitorsAndDate(MonitorCollection $monitorCollection);
+    public function findAllByMonitorAndDate(MonitorEntity $monitorEntity);
 
 }
