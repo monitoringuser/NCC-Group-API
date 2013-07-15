@@ -34,6 +34,8 @@ use Application\Model\Service\Test as TestService;
 class Module
 {
 
+    protected $whiteList = array('auth_login', 'home');
+
     /**
      * @param MvcEvent $e
      */
@@ -43,6 +45,38 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        // TODO: suggest moving to an event listener?
+        $whiteList = $this->whiteList;
+        $auth = $e->getApplication()->getServiceManager()->get('AuthenticationService');
+        
+        $eventManager->attach(MvcEvent::EVENT_ROUTE,
+            function($e) use ($whiteList, $auth) {
+
+                // Route is whitelisted
+                $route = $e->getRouteMatch()->getMatchedRouteName();
+                if (in_array($route, $whiteList)) {
+                    return;
+                }
+
+                // User is authenticated
+                if ($auth->hasIdentity()) {
+                    return;
+                }
+
+                // Redirect to the user login page, as an example
+                $router   = $e->getRouter();
+                $url      = $router->assemble(array(), array(
+                        'name' => 'auth_login'
+                    ));
+
+                $response = $e->getResponse();
+                $response->getHeaders()->addHeaderLine('Location', $url);
+                $response->setStatusCode(302);
+
+                return $response;
+            }, -100);
+
     }
 
     /**

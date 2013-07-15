@@ -34,17 +34,27 @@ return array(
                     ),
                 ),
             ),
-            'auth'        => array(
+            'auth_login'        => array(
+                'type'    => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'       => '/auth/login',
+                    'defaults'    => array(
+                        'controller' => 'Application\Controller\Auth',
+                        'action'     => 'login',
+                    ),
+                ),
+            ),
+            'auth_logout'        => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'       => '/auth[/:action]',
+                    'route'       => '/auth/logout',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults'    => array(
                         'controller' => 'Application\Controller\Auth',
-                        'action'     => 'login',
+                        'action'     => 'logout',
                     ),
                 ),
             ),

@@ -12,12 +12,7 @@
         </div>
         <?php
         $form = $this->form;
-        $form->setAttribute('action', $this->url('auth',
-                array(
-                    'action' => 'login',
-                )
-            )
-        );
+        $form->setAttribute('action', $this->url('auth_login'));
         $form->setAttribute('class', 'form-horizontal');
         $form->prepare();
 

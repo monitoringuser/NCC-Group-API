@@ -1,6 +1,9 @@
 <?php
 $title = new HighCharts\Entity\Title();
-$title->setText('Test Results');
+$title->setText('Last 24hrs Download Time');
+
+$subtitle = new HighCharts\Entity\Title();
+$subtitle->setText($this->monitor->getLabel());
 
 $yAxisTitle = new HighCharts\Entity\Title();
 $yAxisTitle->setText('Total Time');
@@ -9,20 +12,21 @@ $yAxis = new HighCharts\Entity\Yaxis();
 $yAxis->setTitle($yAxisTitle);
 
 $xAxis = new HighCharts\Entity\Xaxis();
-$xAxis->setType('datetime');
+$xAxis->setType('datetime')
+    ->setDateTimeLabelFormats(array(
+            'hour' => '%H:%M'
+        ));
 
 $toolTip = new HighCharts\Entity\Tooltip();
 $toolTip->setValueSuffix('(s)');
 
-$startDateTime = new \DateTime($this->tests->getStartDate());
-
 $seriesCollection = new HighCharts\Entity\SeriesCollection();
-foreach ($this->tests->getMonitors() as $monitor) {
+foreach ($this->monitor->getTestCollections() as $testCollection) {
     $series = new HighCharts\Entity\Series();
-    $series->setName($monitor->getLabel());
+    $series->setName($testCollection->getDateRange());
 
     $data = array();
-    foreach ($monitor->getTests()->getData() as $test) {
+    foreach ($testCollection->getTests() as $test) {
         $date = new \DateTime($test->getDateTime());
 
         $data[] = array(
@@ -35,9 +39,13 @@ foreach ($this->tests->getMonitors() as $monitor) {
     $seriesCollection->addSeries($series);
 }
 
+$chart = new HighCharts\Entity\Chart();
+$chart->setType('spline');
+
 $highCharts = new HighCharts\Entity\HighChart();
-$highCharts->setChart(new HighCharts\Entity\Chart())
+$highCharts->setChart($chart)
     ->setTitle($title)
+    ->setSubTitle($subtitle)
     ->setYAxis($yAxis)
     ->setXAxis($xAxis)
     ->setTooltip($toolTip)

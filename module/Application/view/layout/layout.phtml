@@ -55,7 +55,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo $this->url('auth', array('action' => 'logout')) ?>">
+                                    <a href="<?php echo $this->url('auth_logout', array('action' => 'logout')) ?>">
                                         <i class="icon-eject"></i>
                                         <?php echo $this->translate('Logout') ?>
                                         <?php echo $this->getAuthenticationService()->getIdentity()->getEmail(); ?>
@@ -63,7 +63,7 @@
                                 </li>
                             <?php } else { ?>
                                 <li>
-                                    <a href="<?php echo $this->url('auth') ?>">
+                                    <a href="<?php echo $this->url('auth_login') ?>">
                                         <i class="icon-user"></i>
                                         <?php echo $this->translate('Login') ?>
                                     </a>
