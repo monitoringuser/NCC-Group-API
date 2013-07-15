@@ -71,12 +71,12 @@ class AuthListener implements EventManagerAwareInterface
         // Route is whitelisted
         $route = $this->getEvent()->getRouteMatch()->getMatchedRouteName();
         if (in_array($route, $this->whiteList)) {
-            return;
+            return $this->getEvent()->getResponse();
         }
 
         // User is authenticated
         if ($auth->hasIdentity()) {
-            return;
+            return $this->getEvent()->getResponse();
         }
 
         // Redirect to the user login page, as an example
