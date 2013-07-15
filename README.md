@@ -2,12 +2,16 @@ NCC-Group-API
 =============
 Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tree/poc
 
-Any suggestions / issues etc, please add to the issue tracker https://github.com/eddiejaoude/NCC-Group-API/issues 
+Any suggestions / issues / additional documentation etc, please add to the issue tracker https://github.com/eddiejaoude/NCC-Group-API/issues 
 
-Documentation
-=============
+Technical Documentation
+=======================
 Please see wiki pages for documentation, including request/response examples
 https://github.com/eddiejaoude/NCC-Group-API/wiki
+
+Preview
+
+![Model Architecture](/screenshots/model.png "Model Architecture")
 
 Also note, that each page in the application has a 'query' button, that demostrates what API request query was used to retrieve the information for that page.
 
