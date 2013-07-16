@@ -37,9 +37,10 @@ class TestRest extends Core implements TestInterface
     static public function mapToInternal(array $data)
     {
         $testEntity = new TestEntity;
-        $testEntity->setId($data['Id'])
-            ->setDatetime($data['GmtDateTime'])
-            ->setTotalSeconds($data['TotalSeconds']);
+        $testEntity->setId($data['Id']);
+        // @TODO: Standards this process across mappers
+        empty($data['GmtDateTime'])?: $testEntity->setDatetime($data['GmtDateTime']);
+        $testEntity->setTotalSeconds($data['TotalSeconds']);
 
         return $testEntity;
     }

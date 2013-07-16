@@ -52,6 +52,7 @@ class Core
      */
     public function getClient($request)
     {
+        // @TODO: move to config
         $response = @file_get_contents(
             'https://api.siteconfidence.co.uk/current/' . $this->getIdentity()->getId() .
             $request .
