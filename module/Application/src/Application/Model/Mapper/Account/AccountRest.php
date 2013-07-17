@@ -46,13 +46,16 @@ class AccountRest extends Core implements AccountInterface
     public function findAll()
     {
         $response = $this->getDao()->findAll();
-        // @TODO single account does not return array???
-        //var_dump($response['Response']['Account']); exit;
+
         $accountCollection = new AccountCollection;
-        //foreach ($response['Response'] as $account) {
-            //$accounts[] = self::mapToInternal($account);
+
+        if (empty($response['Response']['Account']['AccountId'])) {
+            foreach ($response['Response']['Account'] as $account) {
+                $accountCollection->addAccount(self::mapToInternal($account));
+            }
+        } else {
             $accountCollection->addAccount(self::mapToInternal($response['Response']['Account']));
-        //}
+        }
 
         return $accountCollection;
     }
