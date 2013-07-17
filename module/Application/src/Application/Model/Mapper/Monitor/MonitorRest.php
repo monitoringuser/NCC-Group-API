@@ -75,18 +75,35 @@ class MonitorRest extends Core implements MonitorInterface
         $response = $this->getDao()->findAllByAccounts($accounts);
 
         $accountCollectionResponse = new AccountCollection;
-        //foreach ($response['Response']['Account'] as $account) {
+
+        // multiple account response
+        if (!empty($response['Response']['Account'][0])) {
+            foreach ($response['Response']['Account'] as $account) {
+                $accountEntityResponse = new AccountEntity;
+                $accountEntityResponse->setId($account['AccountId']);
+
+                $monitorCollection = new MonitorCollection;
+                foreach ($account['Pages']['Page'] as $monitor) {
+                    $monitorCollection->addMonitor(self::mapToInternal($monitor));
+                }
+                $accountCollectionResponse->addAccount(
+                    $accountEntityResponse->setMonitors($monitorCollection)
+                );
+            }
+        } else {
+            // single account response
+            $account = $response['Response']['Account'];
             $accountEntityResponse = new AccountEntity;
-            $accountEntityResponse->setId($response['Response']['Account']['AccountId']);
+            $accountEntityResponse->setId($account['AccountId']);
 
             $monitorCollection = new MonitorCollection;
-            foreach ($response['Response']['Account']['Pages']['Page'] as $monitor) {
+            foreach ($account['Pages']['Page'] as $monitor) {
                 $monitorCollection->addMonitor(self::mapToInternal($monitor));
             }
             $accountCollectionResponse->addAccount(
                 $accountEntityResponse->setMonitors($monitorCollection)
             );
-        //}
+        }
 
         return $accountCollectionResponse;
     }

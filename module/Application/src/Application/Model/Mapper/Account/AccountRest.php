@@ -49,11 +49,13 @@ class AccountRest extends Core implements AccountInterface
 
         $accountCollection = new AccountCollection;
 
-        if (empty($response['Response']['Account']['AccountId'])) {
+        // multiple account response
+        if (!empty($response['Response']['Account'][0])) {
             foreach ($response['Response']['Account'] as $account) {
                 $accountCollection->addAccount(self::mapToInternal($account));
             }
         } else {
+            // single account response
             $accountCollection->addAccount(self::mapToInternal($response['Response']['Account']));
         }
 
