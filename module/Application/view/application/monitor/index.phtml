@@ -13,7 +13,7 @@
                 <th class="hidden-phone">ID</th>
                 <th>Label</th>
                 <th class="hidden-phone hidden-tablet">Url</th>
-                <th>Download Speed (secs)</th>
+                <th>Download</th>
                 <th>Alerting</th>
                 <th>Status</th>
             </tr>
@@ -26,7 +26,7 @@
                     echo '<td class="hidden-phone">' . $monitor->getId() . '</td>';
                     echo '<td>' . $monitor->getLabel() . '</td>';
                     echo '<td class="hidden-phone hidden-tablet">' . $monitor->getUrl() . '</td>';
-                    echo '<td>' . $monitor->getLatestTest()->getTotalSeconds() . '</td>';
+                    echo '<td>' . $monitor->getLatestTest()->getTotalSeconds() . 's</td>';
                     echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
                     echo '<td>
                            <a href="' . $this->url(
