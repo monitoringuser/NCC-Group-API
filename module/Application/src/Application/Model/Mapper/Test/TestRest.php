@@ -57,17 +57,28 @@ class TestRest extends Core implements TestInterface
             $monitorEntity->getActiveTestCollection()->getEndDate()
         );
 
-        $testResults = $response['Response']['Account']['Pages']['Page']['TestResults'];
+        // @TODO log bug with API source NCC
+        // work around for different structured responses
+        // only interested in single account at the moment
+        if (!empty($response['Response']['Account'][0])) {
+            $account = $response['Response']['Account'][0];
+        } else {
+            $account = $response['Response']['Account'];
+        }
+
+        $testResults = $account['Pages']['Page']['TestResults'];
 
         $monitorEntity->getFirstTestCollection()->setCount($testResults['Count'])
             ->setLimit($testResults['Limit'])
             ->setOffset($testResults['Offset']);
 
-        foreach ($response['Response']['Account']['Pages']['Page']['TestResults']['TestResult'] as $test) {
+
+
+        foreach ($testResults['TestResult'] as $test) {
             $monitorEntity->getActiveTestCollection()->addTest(self::mapToInternal($test));
         }
 
-        $monitor = $response['Response']['Account']['Pages']['Page'];
+        $monitor = $account['Pages']['Page'];
 
         $monitorEntity->setId($monitor['Id'])
             ->setUrl($monitor['Url'])
