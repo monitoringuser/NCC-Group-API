@@ -2,6 +2,8 @@ NCC-Group-API
 =============
 Currently working in POC branch https://github.com/eddiejaoude/NCC-Group-API/tree/poc
 
+Demo url: http://nccgroup-api.jaoudestudios.com 
+
 Any suggestions / issues / additional documentation etc, please add to the issue tracker https://github.com/eddiejaoude/NCC-Group-API/issues 
 
 Technical Documentation
