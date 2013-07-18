@@ -26,13 +26,13 @@
                     echo '<td class="hidden-phone">' . $monitor->getId() . '</td>';
                     echo '<td>' . $monitor->getLabel() . '</td>';
                     echo '<td class="hidden-phone hidden-tablet">' . $monitor->getUrl() . '</td>';
-                    echo '<td>' . $monitor->getLatestTest()->getTotalSeconds() . 's</td>';
+                    echo '<td class="text-align-right">' . $monitor->getLatestTest()->getTotalSeconds() . 's</td>';
                     echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
                     echo '<td>
                            <a href="' . $this->url(
                             'test',
                             array('action' => 'index', 'monitorId' => $monitor->getId())
-                        ) . '" class="btn btn-small btn-' . $this->monitorStatus(
+                        ) . '" class="btn btn-small btn-fixed-width btn-' . $this->monitorStatus(
                             $monitor->getStatus()
                         ) . '">' . $monitor->getStatus() . '</a>
                           </td>';

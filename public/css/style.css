@@ -6,3 +6,11 @@ body {
 form#item textarea {
     height:300px;
 }
+
+.btn-fixed-width {
+    width:70px;
+}
+
+table tbody td.text-align-right {
+    text-align: right;
+}
