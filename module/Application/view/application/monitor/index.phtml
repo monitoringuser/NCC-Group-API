@@ -25,7 +25,7 @@
                     echo '<tr>';
                     echo '<td class="hidden-phone">' . $monitor->getId() . '</td>';
                     echo '<td>' . $monitor->getLabel() . '</td>';
-                    echo '<td class="hidden-phone hidden-tablet">' . $monitor->getUrl() . '</td>';
+                    echo '<td class="hidden-phone hidden-tablet">' . $this->shortenText($monitor->getUrl()) . '</td>';
                     echo '<td class="text-align-right">' . $monitor->getLatestTest()->getTotalSeconds() . 's</td>';
                     echo '<td><i class="icon-' . $this->monitorAlertingStatus($monitor->getAlerting()) . '"></i></td>';
                     echo '<td>

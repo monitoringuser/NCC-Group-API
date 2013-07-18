@@ -164,6 +164,7 @@ return array(
             'date'                  => 'Common\View\Helper\Date',
             'monitorStatus'         => 'Application\View\Helper\MonitorStatus',
             'monitorAlertingStatus' => 'Application\View\Helper\MonitorAlertingStatus',
+            'shortenText'           => 'Common\View\Helper\ShortenText',
         ),
     )
 );
