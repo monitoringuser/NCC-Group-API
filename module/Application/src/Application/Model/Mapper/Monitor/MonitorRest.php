@@ -80,7 +80,8 @@ class MonitorRest extends Core implements MonitorInterface
         if (!empty($response['Response']['Account'][0])) {
             foreach ($response['Response']['Account'] as $account) {
                 $accountEntityResponse = new AccountEntity;
-                $accountEntityResponse->setId($account['AccountId']);
+                $accountEntityResponse->setId($account['AccountId'])
+                    ->setName($account['Name']);
 
                 $monitorCollection = new MonitorCollection;
                 foreach ($account['Pages']['Page'] as $monitor) {
@@ -94,7 +95,8 @@ class MonitorRest extends Core implements MonitorInterface
             // single account response
             $account = $response['Response']['Account'];
             $accountEntityResponse = new AccountEntity;
-            $accountEntityResponse->setId($account['AccountId']);
+            $accountEntityResponse->setId($account['AccountId'])
+                ->setName($account['Name']);
 
             $monitorCollection = new MonitorCollection;
             foreach ($account['Pages']['Page'] as $monitor) {
