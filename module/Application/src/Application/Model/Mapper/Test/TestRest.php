@@ -57,7 +57,6 @@ class TestRest extends Core implements TestInterface
             $monitorEntity->getActiveTestCollection()->getEndDate()
         );
 
-        // @TODO log bug with API source NCC
         // work around for different structured responses
         // only interested in single account at the moment
         if (!empty($response['Response']['Account'][0])) {
