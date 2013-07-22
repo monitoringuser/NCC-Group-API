@@ -1,12 +1,13 @@
 <?php
 namespace Application\Model\Entity\Monitor;
 
+use Application\Model\Entity\Error\ErrorCollection;
+use Application\Model\Entity\Test\Test;
+use Application\Model\Entity\Test\TestCollection;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-use Application\Model\Entity\Test\TestCollection;
-use Application\Model\Entity\Test\Test;
 
 class Monitor implements InputFilterAwareInterface
 {
@@ -36,9 +37,9 @@ class Monitor implements InputFilterAwareInterface
     protected $latestTest;
 
     /**
-     * @var TestCollection
+     * @var ErrorCollection
      */
-    protected $tests;
+    protected $errors;
 
     /**
      * @var array
@@ -69,14 +70,14 @@ class Monitor implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        $this->id         = (isset($data['id'])) ? $data['id'] : null;
-        $this->label      = (isset($data['label'])) ? $data['label'] : null;
-        $this->url        = (isset($data['url'])) ? $data['url'] : null;
-        $this->status     = (isset($data['status'])) ? $data['status'] : null;
-        $this->latestTest = (isset($data['latestTest'])) ? $data['latestTest'] : null;
-        $this->tests      = (isset($data['tests'])) ? $data['tests'] : null;
-        $this->alerting   = (isset($data['alerting'])) ? $data['alerting'] : null;
-        $this->createdOn  = (isset($data['created_on'])) ? $data['created_on'] : null;
+        $this->id              = (isset($data['id'])) ? $data['id'] : null;
+        $this->label           = (isset($data['label'])) ? $data['label'] : null;
+        $this->url             = (isset($data['url'])) ? $data['url'] : null;
+        $this->status          = (isset($data['status'])) ? $data['status'] : null;
+        $this->latestTest      = (isset($data['latestTest'])) ? $data['latestTest'] : null;
+        $this->testCollections = (isset($data['testCollections'])) ? $data['testCollections'] : null;
+        $this->alerting        = (isset($data['alerting'])) ? $data['alerting'] : null;
+        $this->createdOn       = (isset($data['created_on'])) ? $data['created_on'] : null;
     }
 
     /**
@@ -321,6 +322,7 @@ class Monitor implements InputFilterAwareInterface
         if (empty($this->activeTestCollection)) {
             return $this->getFirstTestCollection();
         }
+
         return $this->testCollections[$this->activeTestCollection];
     }
 
@@ -331,6 +333,25 @@ class Monitor implements InputFilterAwareInterface
     public function setActiveTestCollection(TestCollection $activeTestCollection)
     {
         $this->activeTestCollection = $activeTestCollection->getDateRange();
+
+        return $this;
+    }
+
+    /**
+     * @return ErrorCollection
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @param ErrorCollection $errors
+     * @return Monitor
+     */
+    public function setErrors(ErrorCollection $errors)
+    {
+        $this->errors = $errors;
 
         return $this;
     }
