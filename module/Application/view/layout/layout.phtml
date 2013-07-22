@@ -55,6 +55,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="<?php echo $this->url('error') ?>">
+                                        <i class="icon-warning-sign"></i>
+                                        <?php echo $this->translate('Errors') ?>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="<?php echo $this->url('auth_logout', array('action' => 'logout')) ?>">
                                         <i class="icon-eject"></i>
                                         <?php echo $this->translate('Logout') ?>

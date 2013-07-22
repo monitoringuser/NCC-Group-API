@@ -25,6 +25,9 @@ use Application\View\Helper\Identity as IdentityViewHelper;
 use Application\Model\Dao\Test\TestRest as TestDao;
 use Application\Model\Mapper\Test\TestRest as TestMapper;
 use Application\Model\Service\Test as TestService;
+use Application\Model\Dao\Error\ErrorRest as ErrorDao;
+use Application\Model\Mapper\Error\ErrorRest as ErrorMapper;
+use Application\Model\Service\Error as ErrorService;
 
 /**
  * Class Module
@@ -174,6 +177,23 @@ class Module
                 'Application\Model\Dao\Test\TestRest' =>  function($sm) {
                     $authService = $sm->get('AuthenticationService');
                     $dao = new TestDao($authService);
+                    return $dao;
+                },
+
+                // error
+                'Application\Model\Service\Error' => function($sm) {
+                    $mapper = $sm->get('Application\Model\Mapper\Error\ErrorRest');
+                    $service = new ErrorService($mapper);
+                    return $service;
+                },
+                'Application\Model\Mapper\Error\ErrorRest' => function($sm) {
+                    $dao = $sm->get('Application\Model\Dao\Error\ErrorRest');
+                    $mapper = new ErrorMapper($dao);
+                    return $mapper;
+                },
+                'Application\Model\Dao\Error\ErrorRest' =>  function($sm) {
+                    $authService = $sm->get('AuthenticationService');
+                    $dao = new ErrorDao($authService);
                     return $dao;
                 },
             ),

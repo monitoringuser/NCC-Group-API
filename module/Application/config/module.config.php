@@ -20,20 +20,6 @@ return array(
                     ),
                 ),
             ),
-            'monitor'     => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'       => '/monitor[/:action][/:accountId]',
-                    'constraints' => array(
-                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults'    => array(
-                        'controller' => 'Application\Controller\Monitor',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
             'auth_login'        => array(
                 'type'    => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -58,6 +44,34 @@ return array(
                     ),
                 ),
             ),
+            'account'     => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/account[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'Application\Controller\Account',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'monitor'     => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/monitor[/:action][/:accountId]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'Application\Controller\Monitor',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
             'test'        => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -72,16 +86,16 @@ return array(
                     ),
                 ),
             ),
-            'account'     => array(
+            'error'     => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'       => '/account[/:action]',
+                    'route'       => '/error[/:action][/:monitorId]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults'    => array(
-                        'controller' => 'Application\Controller\Account',
+                        'controller' => 'Application\Controller\Error',
                         'action'     => 'index',
                     ),
                 ),
@@ -138,7 +152,8 @@ return array(
             'Application\Controller\Auth'    => 'Application\Controller\AuthController',
             'Application\Controller\Monitor' => 'Application\Controller\MonitorController',
             'Application\Controller\Test'    => 'Application\Controller\TestController',
-            'Application\Controller\Account' => 'Application\Controller\AccountController'
+            'Application\Controller\Account' => 'Application\Controller\AccountController',
+            'Application\Controller\Error'   => 'Application\Controller\ErrorController'
         ),
     ),
     'view_manager'    => array(
@@ -165,6 +180,7 @@ return array(
             'monitorStatus'         => 'Application\View\Helper\MonitorStatus',
             'monitorAlertingStatus' => 'Application\View\Helper\MonitorAlertingStatus',
             'shortenText'           => 'Common\View\Helper\ShortenText',
+            'duration'              => 'Common\View\Helper\Duration',
         ),
     )
 );
