@@ -14,9 +14,9 @@ class TestRest extends Core implements TestInterface, DaoInterface
 {
 
     /**
-     * @param string  $monitors
-     * @param string $startDate
-     * @param string $endDate
+     * @param string $monitorId
+     * @param string $startDateTime
+     * @param string $endDateTime
      * @return array
      */
     public function findAllByMonitorAndDate($monitorId, $startDateTime, $endDateTime)
@@ -26,6 +26,7 @@ class TestRest extends Core implements TestInterface, DaoInterface
         $startDateTime = explode(' ', $startDateTime);
         $endDateTime = explode(' ', $endDateTime);
 
+        // @TODO after more DAOs decide how to handle account IDs
         $response = $this->getClient(
             '/Return/[Account[Pages[Page[Id,Url,Label,TestResults[Count,Limit,Offset,TestResult[Id,ResultId,GmtDateTime,TotalSeconds]]]]]]/AccountId/' .
             implode(',', $this->getIdentity()->getAccounts()->getIdsAsArray()) . '/Id/' .
