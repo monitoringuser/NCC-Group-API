@@ -99,7 +99,7 @@ class Account implements InputFilterAwareInterface
 
     /**
      * @param string $id
-     * @return Monitor
+     * @return Account
      */
     public function setId($id)
     {
