@@ -14,6 +14,7 @@
             <thead>
             <tr>
                 <th class="hidden-phone">ID</th>
+                <th class="hidden-phone hidden-tablet">Open</th>
                 <th class="hidden-phone hidden-tablet">Account</th>
                 <th>Monitor</th>
                 <th class="hidden-phone hidden-tablet">Url</th>
@@ -29,6 +30,7 @@
                     foreach ($monitor->getErrors()->getData() as $error) {
                         echo '<tr>';
                         echo '<td class="hidden-phone">' . $error->getId() . '</td>';
+                        echo '<td class="hidden-phone hidden-tablet">' . ($error->isOpen() ? 'Open' : 'Closed') . '</td>';
                         echo '<td class="hidden-phone hidden-tablet">' . $account->getName() . '</td>';
                         echo '<td>' . $monitor->getLabel() . '</td>';
                         echo '<td class="hidden-phone hidden-tablet">' . $this->shortenText($monitor->getUrl()) . '</td>';
