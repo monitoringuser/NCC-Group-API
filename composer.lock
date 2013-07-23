@@ -49,13 +49,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:eddiejaoude/zf2-common.git",
-                "reference": "660ecb238bb8d0041a3714b95f8b60f12469636e"
+                "url": "https://github.com/eddiejaoude/zf2-common.git",
+                "reference": "aabbcfdcebbcc650092c2b6ebd42b0b2a77b1eae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eddiejaoude/zf2-common/zipball/660ecb238bb8d0041a3714b95f8b60f12469636e",
-                "reference": "660ecb238bb8d0041a3714b95f8b60f12469636e",
+                "url": "https://api.github.com/repos/eddiejaoude/zf2-common/zipball/aabbcfdcebbcc650092c2b6ebd42b0b2a77b1eae",
+                "reference": "aabbcfdcebbcc650092c2b6ebd42b0b2a77b1eae",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 "source": "https://github.com/eddiejaoude/zf2-common/tree/master",
                 "issues": "https://github.com/eddiejaoude/zf2-common/issues"
             },
-            "time": "2013-06-19 07:04:45"
+            "time": "2013-07-22 20:59:56"
         },
         {
             "name": "zendframework/zendframework",
@@ -206,12 +206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZFTool.git",
-                "reference": "1a0fa773dbb60ba4b61e08fcc8aace476eaa9cfc"
+                "reference": "013a5e29c4046ff07e370dca661c3941b99ac19b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZFTool/zipball/1a0fa773dbb60ba4b61e08fcc8aace476eaa9cfc",
-                "reference": "1a0fa773dbb60ba4b61e08fcc8aace476eaa9cfc",
+                "url": "https://api.github.com/repos/zendframework/ZFTool/zipball/013a5e29c4046ff07e370dca661c3941b99ac19b",
+                "reference": "013a5e29c4046ff07e370dca661c3941b99ac19b",
                 "shasum": ""
             },
             "require": {
@@ -220,6 +220,7 @@
                 "zendframework/zend-config": ">=2.0.0",
                 "zendframework/zend-console": ">=2.0.0",
                 "zendframework/zend-file": ">=2.0.0",
+                "zendframework/zend-form": ">=2.0.0",
                 "zendframework/zend-loader": ">=2.0.0",
                 "zendframework/zend-modulemanager": ">=2.0.0",
                 "zendframework/zend-mvc": ">=2.0.0",
@@ -249,7 +250,7 @@
                 "tool",
                 "zf2"
             ],
-            "time": "2013-06-08 07:08:10"
+            "time": "2013-07-22 15:45:57"
         }
     ],
     "packages-dev": [
@@ -825,17 +826,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.3.1",
+            "version": "v2.3.2",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "v2.3.1"
+                "reference": "v2.3.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.3.1",
-                "reference": "v2.3.1",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.3.2",
+                "reference": "v2.3.2",
                 "shasum": ""
             },
             "require": {
@@ -868,7 +869,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-05-10 18:12:13"
+            "time": "2013-07-11 19:36:36"
         },
         {
             "name": "verkkokauppacom/parallel-phpunit",

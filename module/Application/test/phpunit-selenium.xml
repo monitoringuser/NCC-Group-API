@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true">
+    <testsuites>
+        <testsuite name="selenium">
+            <file>SeleniumTest/Application/Core.php</file>
+            <file>SeleniumTest/Application/Auth/LoginTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

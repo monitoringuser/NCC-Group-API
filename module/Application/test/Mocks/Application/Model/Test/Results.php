@@ -1,5 +1,5 @@
 <?php
-namespace ApplicationTest\Model\Mocks\Test;
+namespace Test\Mocks\Application\Model\Test;
 
 use Application\Model\Dao\Error\ErrorInterface;
 use Common\Model\Dao\DaoInterface;
