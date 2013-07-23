@@ -18,7 +18,7 @@
                 <th>Monitor</th>
                 <th class="hidden-phone hidden-tablet">Url</th>
                 <th>Result</th>
-                <th>Duration</th>
+                <th class="hidden-phone">Duration</th>
                 <th>Status</th>
             </tr>
             </thead>
@@ -33,7 +33,7 @@
                         echo '<td>' . $monitor->getLabel() . '</td>';
                         echo '<td class="hidden-phone hidden-tablet">' . $this->shortenText($monitor->getUrl()) . '</td>';
                         echo '<td>' . $error->getResult() . '</td>';
-                        echo '<td>' . $this->duration($error->getDuration()) . '</td>';
+                        echo '<td class="hidden-phone">' . $this->duration($error->getDuration()) . '</td>';
                         echo '<td>
                            <span class="disabled btn btn-small btn-fixed-width btn-' . $this->monitorStatus(
                                 $error->getStatus()
