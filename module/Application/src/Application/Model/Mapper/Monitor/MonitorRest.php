@@ -3,6 +3,7 @@ namespace Application\Model\Mapper\Monitor;
 
 use Application\Model\Entity\Account\AccountCollection;
 use Application\Model\Entity\Account\Account as AccountEntity;
+use Application\Model\Mapper\Account\AccountRest as AccountMapper;
 use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
 use Application\Model\Entity\Monitor\MonitorCollection;
 use Application\Model\Entity\User as UserEntity;
@@ -61,6 +62,20 @@ class MonitorRest extends Core implements MonitorInterface
     }
 
     /**
+     * @param array $data
+     * @return MonitorCollection $monitorCollection
+     */
+    static public function mapToCollection(array $data)
+    {
+        $monitorCollection = new MonitorCollection();
+        foreach($data as $monitor) {
+            $monitorCollection->addMonitor(self::mapToInternal($monitor));
+        }
+
+        return $monitorCollection;
+    }
+
+    /**
      * @param AccountCollection $accountCollectionRequest
      * @return AccountCollection
      */
@@ -77,16 +92,12 @@ class MonitorRest extends Core implements MonitorInterface
 
         $accountCollectionResponse = new AccountCollection;
         foreach ($response['Response']['Account'] as $account) {
-            $accountEntityResponse = new AccountEntity;
-            $accountEntityResponse->setId($account['AccountId'])
-                ->setName($account['Name']);
+            $accountEntityResponse = AccountMapper::mapToInternal($account);
 
-            $monitorCollection = new MonitorCollection;
-            foreach ($account['Pages']['Page'] as $monitor) {
-                $monitorCollection->addMonitor(self::mapToInternal($monitor));
-            }
             $accountCollectionResponse->addAccount(
-                $accountEntityResponse->setMonitors($monitorCollection)
+                $accountEntityResponse->setMonitors(
+                    self::mapToCollection($account['Pages']['Page'])
+                )
             );
         }
 
