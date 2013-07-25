@@ -71,8 +71,6 @@ class TestRest extends Core implements TestInterface
             ->setLimit($testResults['Limit'])
             ->setOffset($testResults['Offset']);
 
-
-
         foreach ($testResults['TestResult'] as $test) {
             $monitorEntity->getActiveTestCollection()->addTest(self::mapToInternal($test));
         }
