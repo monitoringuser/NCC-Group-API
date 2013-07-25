@@ -66,34 +66,17 @@ class MonitorRest extends Core implements MonitorInterface
      */
     public function findAllByAccounts(AccountCollection $accountCollectionRequest)
     {
-        $accounts = array();
-        foreach ($accountCollectionRequest->getAccounts() as $accountEntityRequest) {
-            $accounts[] = $accountEntityRequest->getId();
-        }
-        $accounts = implode(',', $accounts);
+        $accounts = implode(',', $accountCollectionRequest->getIdsAsArray());
 
         $response = $this->getDao()->findAllByAccounts($accounts);
 
+        // single account response fix
+        if (!empty($response['Response']['Account']['AccountId'])) {
+            $response['Response']['Account'] = array($response['Response']['Account']);
+        }
+
         $accountCollectionResponse = new AccountCollection;
-
-        // multiple account response
-        if (!empty($response['Response']['Account'][0])) {
-            foreach ($response['Response']['Account'] as $account) {
-                $accountEntityResponse = new AccountEntity;
-                $accountEntityResponse->setId($account['AccountId'])
-                    ->setName($account['Name']);
-
-                $monitorCollection = new MonitorCollection;
-                foreach ($account['Pages']['Page'] as $monitor) {
-                    $monitorCollection->addMonitor(self::mapToInternal($monitor));
-                }
-                $accountCollectionResponse->addAccount(
-                    $accountEntityResponse->setMonitors($monitorCollection)
-                );
-            }
-        } else {
-            // single account response
-            $account = $response['Response']['Account'];
+        foreach ($response['Response']['Account'] as $account) {
             $accountEntityResponse = new AccountEntity;
             $accountEntityResponse->setId($account['AccountId'])
                 ->setName($account['Name']);

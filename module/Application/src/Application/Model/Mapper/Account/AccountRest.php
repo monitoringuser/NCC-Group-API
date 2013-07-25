@@ -41,23 +41,32 @@ class AccountRest extends Core implements AccountInterface
     }
 
     /**
+     * @param array  $data
+     * @return AccountCollection $accountCollection
+     */
+    static public function mapToCollection(array $data)
+    {
+        $accountCollection = new AccountCollection();
+        foreach ($data as $account) {
+            $accountCollection->addAccount(self::mapToInternal($account));
+        }
+
+        return $accountCollection;
+    }
+
+    /**
      * @return AccountCollection
      */
     public function findAll()
     {
         $response = $this->getDao()->findAll();
 
-        $accountCollection = new AccountCollection;
-
-        // multiple account response
-        if (!empty($response['Response']['Account'][0])) {
-            foreach ($response['Response']['Account'] as $account) {
-                $accountCollection->addAccount(self::mapToInternal($account));
-            }
-        } else {
-            // single account response
-            $accountCollection->addAccount(self::mapToInternal($response['Response']['Account']));
+        // single account response fix
+        if (!empty($response['Response']['Account']['AccountId'])) {
+            $response['Response']['Account'] = array($response['Response']['Account']);
         }
+
+        $accountCollection = self::mapToCollection($response['Response']['Account']);
 
         return $accountCollection;
     }
