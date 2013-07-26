@@ -6,7 +6,9 @@ use Application\Model\Entity\Account\AccountCollection;
 use Application\Model\Entity\Error\Error as ErrorEntity;
 use Application\Model\Entity\Error\ErrorCollection;
 use Application\Model\Entity\Monitor\Monitor as MonitorEntity;
+use Application\Model\Mapper\Monitor\MonitorRest as MonitorMapper;
 use Application\Model\Entity\Monitor\MonitorCollection;
+use Application\Model\Mapper\Account\AccountRest as AccountMapper;
 use Application\Model\Mapper\Error\ErrorInterface;
 use Common\Model\Mapper\Core;
 
@@ -40,7 +42,7 @@ class ErrorRest extends Core implements ErrorInterface
     /**
      * @param array $data
      * @param bool  $isOpen
-     * @return ErrorEntity $errorEntity
+     * @return bool $errorEntity
      */
     static public function mapToInternal(array $data, $isOpen = true)
     {
@@ -50,22 +52,20 @@ class ErrorRest extends Core implements ErrorInterface
             ->setStatusCode($data['StatusCode'])
             ->setStatus($data['Status'])
             ->setDuration($data['Duration'])
-            ->setNotes($data['Notes'])
+           // ->setNotes($data['Notes'])
             ->setDatetime($data['LocalDateTime'])
             ->setResult($data['Result'])
             ->setOpen($isOpen);
-
 
         return $errorEntity;
     }
 
     /**
+     * @param array $response
      * @return AccountCollection
      */
-    public function findAll()
+    static private function mapAllToInternal(array $response)
     {
-        $response = $this->getDao()->findAll();
-
         // crude fix for inconsistent returned data
         if(!empty($response['Response']['Account']['AccountId'])) {
             $response['Response']['Account'] = array($response['Response']['Account']);
@@ -73,17 +73,22 @@ class ErrorRest extends Core implements ErrorInterface
 
         $accountCollection = new AccountCollection();
         foreach($response['Response']['Account'] as $account) {
-            $accountEntity = new AccountEntity();
-            $accountEntity->setId($account['AccountId'])
-                ->setName($account['Name']);
+            $accountEntity = AccountMapper::mapToInternal($account);
+
+
+            // crude fix for inconsistent returned data
+            if(!empty($account['Pages']['Page']['Id'])) {
+                $account['Pages']['Page'] = array($account['Pages']['Page']);
+            }
+
+            // fix for incomplete response, requires investigation
+            if(empty($account['Pages']['Page'])) {
+                break;
+            }
 
             $monitorCollection = new MonitorCollection();
             foreach($account['Pages']['Page'] as $monitor) {
-                $monitorEntity = new MonitorEntity();
-                $monitorEntity->setId($monitor['Id'])
-                    ->setUrl($monitor['Url'])
-                    ->setLabel($monitor['Label'])
-                    ->setStatus($monitor['CurrentStatus']);
+                $monitorEntity = MonitorMapper::mapToInternal($monitor);
 
                 $errorCollection = new ErrorCollection();
 
@@ -106,32 +111,27 @@ class ErrorRest extends Core implements ErrorInterface
                         $errorCollection->addError(self::mapToInternal($closedErrors, false));
                     }
                 }
-                $monitorEntity->setErrors($errorCollection);
 
-                $monitorCollection->addMonitor($monitorEntity);
+                $monitorCollection->addMonitor(
+                    $monitorEntity->setErrors($errorCollection)
+                );
             }
-            $accountEntity->setMonitors($monitorCollection);
-            $accountCollection->addAccount($accountEntity);
+            $accountCollection->addAccount(
+                $accountEntity->setMonitors($monitorCollection)
+            );
         }
 
         return $accountCollection;
     }
 
     /**
-     * @param AccountCollection $accountCollectionRequest
      * @return AccountCollection
      */
-    public function findAllByAccounts(AccountCollection $accountCollectionRequest)
+    public function findAll()
     {
-        $accounts = array();
-        foreach ($accountCollectionRequest->getAccounts() as $accountEntityRequest) {
-            $accounts[] = $accountEntityRequest->getId();
-        }
-        $accounts = implode(',', $accounts);
+        $response = $this->getDao()->findAll();
 
-        $response = $this->getDao()->findAllByAccounts($accounts);
-var_dump($response); exit;
-        return $accountCollection;
+        return self::mapAllToInternal($response);
     }
 
     /**
@@ -141,8 +141,8 @@ var_dump($response); exit;
     public function findAllByMonitorId(MonitorEntity $monitorEntity)
     {
         $response = $this->getDao()->findAllByMonitorId($monitorEntity->getId());
-var_dump($response); exit;
-        return $monitorEntity;
+
+        return self::mapAllToInternal($response);
     }
 
 

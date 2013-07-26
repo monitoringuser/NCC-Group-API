@@ -1,6 +1,27 @@
 <div class="row">
     <div class="span12">
         <div class="btn-toolbar">
+            <div class="btn-group">
+                <a href="<?php echo $this->url('error'); ?>" class="btn">
+                    <i class="icon-list"></i> Show All
+                </a>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <?php
+                    foreach ($this->errors->getAccounts() as $account) {
+                        foreach ($account->getMonitors()->getData() as $monitor) {
+                            echo '<li><a href="' . $this->url(
+                                    'error',
+                                    array('action' => 'monitor', 'monitorId' => $monitor->getId())
+                                ) . '">' . $monitor->getId() . ' ' . $monitor->getLabel() . '</a></li>';
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+
             <div class="btn-group pull-right">
                 <a class="btn" href="#query1" data-toggle="modal"><i class="icon-globe"></i> Query</a>
             </div>

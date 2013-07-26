@@ -13,10 +13,9 @@ interface ErrorInterface
 {
 
     /**
-     * @param AccountCollection $accountCollection
      * @return AccountCollection
      */
-    public function findAllByAccounts(AccountCollection $accountCollection);
+    public function findAll();
 
     /**
      * @param MonitorEntity $monitorEntity

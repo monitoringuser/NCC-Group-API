@@ -16,13 +16,20 @@ class Error extends Core
      */
     public function findAll()
     {
-        $authService = $this->getServiceLocator()->get('AuthenticationService');
-
         $monitors = $this->getMapper()->findAll();
 
         return $monitors;
     }
 
+    /**
+     * @param string $monitorID
+     * @return array
+     */
+    public function findAllByMonitorId($monitorID)
+    {
+        $monitors = $this->getMapper()->findAllByMonitorId($monitorID);
 
+        return $monitors;
+    }
 
 }

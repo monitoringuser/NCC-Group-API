@@ -10,10 +10,9 @@ interface ErrorInterface
 {
 
     /**
-     * @param string $accounts
      * @return array
      */
-    public function findAllByAccounts($accounts);
+    public function findAll();
 
     /**
      * @param string $monitorId

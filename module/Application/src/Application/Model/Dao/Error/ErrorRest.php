@@ -10,7 +10,7 @@ use Zend\Config\Reader\Json;
  *
  * @package Application\Model\Dao\Error
  */
-    class ErrorRest extends Core implements ErrorInterface, DaoInterface
+class ErrorRest extends Core implements ErrorInterface, DaoInterface
 {
 
     /**
@@ -27,26 +27,15 @@ use Zend\Config\Reader\Json;
     }
 
     /**
-     * @param string $accounts
-     * @return array
-     */
-    public function findAllByAccounts($accounts)
-    {
-        $response = $this->getClient(
-            '/Return/[Account[AccountId,Name,Pages[Page[Id,Url,Label,Notes,CurrentStatus,Errors[Open[Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]],Closed[Count,Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]]]]]]]/AccountId/' . (string) $accounts
-        );
-
-        return $response;
-    }
-
-    /**
      * @param string $monitorId
      * @return array
      */
     public function findAllByMonitorId($monitorId)
     {
         $response = $this->getClient(
-            '/Return/[Account[AccountId,Name,Pages[Page[Id,Url,Label,Notes,CurrentStatus,Errors[Open[Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]],Closed[Count,Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]]]]]]]/AccountId/MN2A7711,MN3A7973/Id/' . (string) $monitorId
+            '/Return/[Account[AccountId,Name,Pages[Page[Id,Url,Label,Notes,CurrentStatus,Errors[Open[Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]],Closed[Count,Error[Id,Ref,LocalDateTime,StatusCode,Status,Notes,ResultCode,Result,Classification,Duration]]]]]]]/AccountId/' .
+            implode(',', $this->getIdentity()->getAccounts()->getIdsAsArray()) .
+            '/Id/' . (string) $monitorId
         );
 
         return $response;

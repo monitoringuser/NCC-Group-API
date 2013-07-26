@@ -37,7 +37,7 @@ class ErrorController extends AbstractActionController
         $monitorEntity->setId($monitorId);
 
         $errorService = $this->getServiceLocator()->get('Application\Model\Service\Error');
-        $errors = $errorService->findAllByAccount($monitorEntity);
+        $errors = $errorService->findAllByMonitorId($monitorEntity);
 
         // use indexAction view template (or move to partial)
         $view = new ViewModel(

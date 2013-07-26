@@ -47,16 +47,21 @@ class MonitorRest extends Core implements MonitorInterface
         $monitorEntity->setId($data['Id'])
             ->setUrl($data['Url'])
             ->setLabel($data['Label'])
-            ->setStatus($data['CurrentStatus'])
-            ->setLatestTest(
+            ->setStatus($data['CurrentStatus']);
+
+        // @TODO make consistent across mappers
+        empty($data['Alerting'])?: $monitorEntity->setAlerting($data['Alerting']);
+
+        if (!empty($data['LastTestDownloadSpeed'])) {
+            $monitorEntity->setLatestTest(
                 TestMapper::mapToInternal(
                     array(
                         'Id'           => '',
                         'TotalSeconds' => $data['LastTestDownloadSpeed']
                     )
                 )
-            )
-            ->setAlerting($data['Alerting']);
+            );
+        }
 
         return $monitorEntity;
     }
