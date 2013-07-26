@@ -14,3 +14,9 @@ form#item textarea {
 table tbody td.text-align-right {
     text-align: right;
 }
+
+.progress .bar-inverse {
+    background-color: #000000;
+    background-image: linear-gradient(to bottom, #444444, #222222);
+    background-repeat: repeat-x;
+}

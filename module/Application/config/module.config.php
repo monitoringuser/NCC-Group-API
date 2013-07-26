@@ -20,17 +20,17 @@ return array(
                     ),
                 ),
             ),
-            'auth_login'        => array(
+            'auth_login'  => array(
                 'type'    => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'       => '/auth/login',
-                    'defaults'    => array(
+                    'route'    => '/auth/login',
+                    'defaults' => array(
                         'controller' => 'Application\Controller\Auth',
                         'action'     => 'login',
                     ),
                 ),
             ),
-            'auth_logout'        => array(
+            'auth_logout' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'       => '/auth/logout',
@@ -86,7 +86,7 @@ return array(
                     ),
                 ),
             ),
-            'error'     => array(
+            'error'       => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'       => '/error[/:action][/:monitorId]',
@@ -174,13 +174,14 @@ return array(
     ),
     'view_helpers'    => array(
         'invokables' => array(
-            'formHelper'            => 'Common\View\Helper\TwitBootInline',
-            'messages'              => 'Common\View\Helper\TwitBootMessages',
-            'date'                  => 'Common\View\Helper\Date',
-            'monitorStatus'         => 'Application\View\Helper\MonitorStatus',
-            'monitorAlertingStatus' => 'Application\View\Helper\MonitorAlertingStatus',
-            'shortenText'           => 'Common\View\Helper\ShortenText',
-            'duration'              => 'Common\View\Helper\Duration',
+            'formHelper'              => 'Common\View\Helper\TwitBootInline',
+            'messages'                => 'Common\View\Helper\TwitBootMessages',
+            'date'                    => 'Common\View\Helper\Date',
+            'monitorStatus'           => 'Application\View\Helper\MonitorStatus',
+            'monitorStatusPercentage' => 'Application\View\Helper\monitorStatusPercentage',
+            'monitorAlertingStatus'   => 'Application\View\Helper\MonitorAlertingStatus',
+            'shortenText'             => 'Common\View\Helper\ShortenText',
+            'duration'                => 'Common\View\Helper\Duration',
         ),
     )
 );

@@ -30,6 +30,25 @@
 
 <div class="row">
     <div class="span12">
+        <div class="progress">
+            <div class="bar bar-success tooltiptitle"
+                 style="width: <?php echo $this->monitorStatusPercentage($this->monitors)->getStateOkAsPercentage(); ?>%;"
+                 title="<?php echo $this->monitorStatusPercentage($this->monitors)->getStateOkAsPercentage(); ?>% OK monitors"></div>
+            <div class="bar bar-warning tooltiptitle"
+                 style="width: <?php echo $this->monitorStatusPercentage($this->monitors)->getStateWarningAsPercentage(); ?>%;"
+                 title="<?php echo $this->monitorStatusPercentage($this->monitors)->getStateWarningAsPercentage(); ?>% Warning monitors"></div>
+            <div class="bar bar-danger tooltiptitle"
+                 style="width: <?php echo $this->monitorStatusPercentage($this->monitors)->getStateErrorAsPercentage(); ?>%;"
+                 title="<?php echo $this->monitorStatusPercentage($this->monitors)->getStateErrorAsPercentage(); ?>% Error monitors"></div>
+            <div class="bar bar-inverse tooltiptitle"
+                 style="width: <?php echo $this->monitorStatusPercentage($this->monitors)->getStateDownAsPercentage(); ?>%;"
+                 title="<?php echo $this->monitorStatusPercentage($this->monitors)->getStateDownAsPercentage(); ?>% Down monitors"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
         <table class="table table-striped">
             <thead>
             <tr>
