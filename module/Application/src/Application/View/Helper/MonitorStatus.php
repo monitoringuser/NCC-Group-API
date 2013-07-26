@@ -28,6 +28,9 @@ class MonitorStatus extends AbstractHelper
             case 'Error';
                 $image = 'danger';
                 break;
+            case 'Down';
+                $image = 'inverse';
+                break;
             default:
                 $image = '';
                 break;
