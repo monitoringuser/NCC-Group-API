@@ -1,5 +1,16 @@
 <div class="row">
     <div class="span12">
+        <div id="reportrange">
+            <i class="icon-calendar icon-large"></i>
+            <span><?php echo date("F j, Y", strtotime('-30 day')); ?> - <?php echo date("F j, Y"); ?></span>
+            <b class="caret"></b>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="span12">
         <div class="btn-toolbar">
             <div class="btn-group">
                 <a href="<?php echo $this->url('error'); ?>" class="btn">
