@@ -96,6 +96,12 @@ class MonitorRest extends Core implements MonitorInterface
         }
 
         $accountCollectionResponse = new AccountCollection;
+
+        // if no data
+        if (empty($response['Response']['Account'])) {
+            return $accountCollectionResponse;
+        }
+
         foreach ($response['Response']['Account'] as $account) {
             $accountEntityResponse = AccountMapper::mapToInternal($account);
 
