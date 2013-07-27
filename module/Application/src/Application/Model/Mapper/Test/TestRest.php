@@ -65,6 +65,11 @@ class TestRest extends Core implements TestInterface
             $account = $response['Response']['Account'];
         }
 
+        // check for data within response
+        if (!is_array($account)) {
+            return $monitorEntity;
+        }
+
         $testResults = $account['Pages']['Page']['TestResults'];
 
         $monitorEntity->getFirstTestCollection()->setCount($testResults['Count'])
