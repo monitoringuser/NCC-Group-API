@@ -15,9 +15,7 @@ class MonitorCollection
     /**
      * @var array
      */
-    protected $monitors;
-
-
+    protected $monitors = array();
 
     /**
      * @return array

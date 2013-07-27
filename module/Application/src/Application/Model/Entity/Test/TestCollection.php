@@ -15,7 +15,7 @@ class TestCollection
     /**
      * @var array
      */
-    protected $tests;
+    protected $tests = array();
 
     /**
      * @var int

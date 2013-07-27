@@ -15,7 +15,7 @@ class AccountCollection
     /**
      * @var array
      */
-    protected $accounts;
+    protected $accounts = array();
 
     /**
      * Alias for getAccounts()
