@@ -178,7 +178,7 @@ return array(
             'messages'                => 'Common\View\Helper\TwitBootMessages',
             'date'                    => 'Common\View\Helper\Date',
             'monitorStatus'           => 'Application\View\Helper\MonitorStatus',
-            'monitorStatusPercentage' => 'Application\View\Helper\monitorStatusPercentage',
+            'monitorStatusPercentage' => 'Application\View\Helper\MonitorStatusPercentage',
             'monitorAlertingStatus'   => 'Application\View\Helper\MonitorAlertingStatus',
             'shortenText'             => 'Common\View\Helper\ShortenText',
             'duration'                => 'Common\View\Helper\Duration',
