@@ -9,7 +9,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
-        "eddiejaoude/zf2-common": "dev-master",
+        "eddiejaoude/zf2-common": "dev-master#aabbcfdcebbcc650092c2b6ebd42b0b2a77b1eae",
         "eddiejaoude/highcharts-php": "dev-master",
         "zendframework/zftool": "dev-master"
     },
