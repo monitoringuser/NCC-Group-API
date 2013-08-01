@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row visible-desktop">
     <div class="span12">
         <div class="btn-toolbar">
             <div class="btn-group">
@@ -35,7 +35,6 @@
             <thead>
             <tr>
                 <th class="hidden-phone hidden-tablet">Open</th>
-                <th class="hidden-phone hidden-tablet">Account</th>
                 <th>Monitor</th>
                 <th class="hidden-phone hidden-tablet">Url</th>
                 <th>Result</th>
@@ -50,15 +49,14 @@
                     foreach ($monitor->getErrors()->getData() as $error) {
                         echo '<tr>';
                         echo '<td class="hidden-phone hidden-tablet">' . ($error->isOpen() ? 'Open' : 'Closed') . '</td>';
-                        echo '<td class="hidden-phone hidden-tablet">' . $account->getName() . '</td>';
                         echo '<td>' . $monitor->getLabel() . '</td>';
                         echo '<td class="hidden-phone hidden-tablet">' . $this->shortenText($monitor->getUrl()) . '</td>';
                         echo '<td>' . $error->getResult() . '</td>';
                         echo '<td class="hidden-phone">' . $this->duration($error->getDuration()) . '</td>';
                         echo '<td>
-                           <span class="disabled btn btn-small btn-fixed-width btn-' . $this->monitorStatus(
+                           <span class="disabled tooltiptitle btn btn-small btn-fixed-width btn-' . $this->monitorStatus(
                                 $error->getStatus()
-                            ) . '">' . $error->getStatus() . '</span>
+                            ) . '" title="' . $account->getName() . '">' . $error->getStatus() . '</span>
                           </td>';
                     }
                 }
